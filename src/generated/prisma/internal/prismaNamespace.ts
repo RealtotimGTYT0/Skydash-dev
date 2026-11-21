@@ -414,7 +414,10 @@ export const ModelName = {
   Setting: 'Setting',
   RateLimitBucket: 'RateLimitBucket',
   VoteSite: 'VoteSite',
-  VoteRecord: 'VoteRecord'
+  VoteRecord: 'VoteRecord',
+  Rank: 'Rank',
+  AccountRank: 'AccountRank',
+  UploadedImage: 'UploadedImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "minecraftAccount" | "session" | "linkCode" | "tokenBalance" | "tokenTransaction" | "playtimeRecord" | "category" | "product" | "purchase" | "rewardQueue" | "serverInstance" | "serverNonce" | "adminAuditLog" | "setting" | "rateLimitBucket" | "voteSite" | "voteRecord"
+    modelProps: "user" | "minecraftAccount" | "session" | "linkCode" | "tokenBalance" | "tokenTransaction" | "playtimeRecord" | "category" | "product" | "purchase" | "rewardQueue" | "serverInstance" | "serverNonce" | "adminAuditLog" | "setting" | "rateLimitBucket" | "voteSite" | "voteRecord" | "rank" | "accountRank" | "uploadedImage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1766,6 +1769,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Rank: {
+      payload: Prisma.$RankPayload<ExtArgs>
+      fields: Prisma.RankFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RankFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RankFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>
+        }
+        findFirst: {
+          args: Prisma.RankFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RankFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>
+        }
+        findMany: {
+          args: Prisma.RankFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>[]
+        }
+        create: {
+          args: Prisma.RankCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>
+        }
+        createMany: {
+          args: Prisma.RankCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RankCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>[]
+        }
+        delete: {
+          args: Prisma.RankDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>
+        }
+        update: {
+          args: Prisma.RankUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>
+        }
+        deleteMany: {
+          args: Prisma.RankDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RankUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RankUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>[]
+        }
+        upsert: {
+          args: Prisma.RankUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RankPayload>
+        }
+        aggregate: {
+          args: Prisma.RankAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRank>
+        }
+        groupBy: {
+          args: Prisma.RankGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RankGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RankCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RankCountAggregateOutputType> | number
+        }
+      }
+    }
+    AccountRank: {
+      payload: Prisma.$AccountRankPayload<ExtArgs>
+      fields: Prisma.AccountRankFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AccountRankFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AccountRankFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>
+        }
+        findFirst: {
+          args: Prisma.AccountRankFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AccountRankFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>
+        }
+        findMany: {
+          args: Prisma.AccountRankFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>[]
+        }
+        create: {
+          args: Prisma.AccountRankCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>
+        }
+        createMany: {
+          args: Prisma.AccountRankCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AccountRankCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>[]
+        }
+        delete: {
+          args: Prisma.AccountRankDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>
+        }
+        update: {
+          args: Prisma.AccountRankUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>
+        }
+        deleteMany: {
+          args: Prisma.AccountRankDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AccountRankUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AccountRankUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>[]
+        }
+        upsert: {
+          args: Prisma.AccountRankUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountRankPayload>
+        }
+        aggregate: {
+          args: Prisma.AccountRankAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAccountRank>
+        }
+        groupBy: {
+          args: Prisma.AccountRankGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AccountRankGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AccountRankCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AccountRankCountAggregateOutputType> | number
+        }
+      }
+    }
+    UploadedImage: {
+      payload: Prisma.$UploadedImagePayload<ExtArgs>
+      fields: Prisma.UploadedImageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UploadedImageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UploadedImageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>
+        }
+        findFirst: {
+          args: Prisma.UploadedImageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UploadedImageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>
+        }
+        findMany: {
+          args: Prisma.UploadedImageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>[]
+        }
+        create: {
+          args: Prisma.UploadedImageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>
+        }
+        createMany: {
+          args: Prisma.UploadedImageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UploadedImageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>[]
+        }
+        delete: {
+          args: Prisma.UploadedImageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>
+        }
+        update: {
+          args: Prisma.UploadedImageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>
+        }
+        deleteMany: {
+          args: Prisma.UploadedImageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UploadedImageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UploadedImageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>[]
+        }
+        upsert: {
+          args: Prisma.UploadedImageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadedImagePayload>
+        }
+        aggregate: {
+          args: Prisma.UploadedImageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUploadedImage>
+        }
+        groupBy: {
+          args: Prisma.UploadedImageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UploadedImageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UploadedImageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UploadedImageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1836,7 +2061,8 @@ export const MinecraftAccountScalarFieldEnum = {
   playtimeTotalSeconds: 'playtimeTotalSeconds',
   playtimeCarrySeconds: 'playtimeCarrySeconds',
   firstSeenAt: 'firstSeenAt',
-  lastSeenAt: 'lastSeenAt'
+  lastSeenAt: 'lastSeenAt',
+  leaderboardHidden: 'leaderboardHidden'
 } as const
 
 export type MinecraftAccountScalarFieldEnum = (typeof MinecraftAccountScalarFieldEnum)[keyof typeof MinecraftAccountScalarFieldEnum]
@@ -1946,6 +2172,7 @@ export const ProductScalarFieldEnum = {
   stockLimit: 'stockLimit',
   stockSold: 'stockSold',
   perPlayerLimit: 'perPlayerLimit',
+  rankName: 'rankName',
   sortOrder: 'sortOrder',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
@@ -2073,6 +2300,41 @@ export const VoteRecordScalarFieldEnum = {
 } as const
 
 export type VoteRecordScalarFieldEnum = (typeof VoteRecordScalarFieldEnum)[keyof typeof VoteRecordScalarFieldEnum]
+
+
+export const RankScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  displayName: 'displayName',
+  priority: 'priority',
+  grantCommands: 'grantCommands',
+  revokeCommands: 'revokeCommands',
+  createdAt: 'createdAt'
+} as const
+
+export type RankScalarFieldEnum = (typeof RankScalarFieldEnum)[keyof typeof RankScalarFieldEnum]
+
+
+export const AccountRankScalarFieldEnum = {
+  mcAccountId: 'mcAccountId',
+  rankId: 'rankId',
+  grantedBy: 'grantedBy',
+  createdAt: 'createdAt'
+} as const
+
+export type AccountRankScalarFieldEnum = (typeof AccountRankScalarFieldEnum)[keyof typeof AccountRankScalarFieldEnum]
+
+
+export const UploadedImageScalarFieldEnum = {
+  id: 'id',
+  mime: 'mime',
+  data: 'data',
+  size: 'size',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+} as const
+
+export type UploadedImageScalarFieldEnum = (typeof UploadedImageScalarFieldEnum)[keyof typeof UploadedImageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2312,6 +2574,20 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'Bytes'
+ */
+export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+/**
+ * Reference to a field of type 'Bytes[]'
+ */
+export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2493,6 +2769,9 @@ export type GlobalOmitConfig = {
   rateLimitBucket?: Prisma.RateLimitBucketOmit
   voteSite?: Prisma.VoteSiteOmit
   voteRecord?: Prisma.VoteRecordOmit
+  rank?: Prisma.RankOmit
+  accountRank?: Prisma.AccountRankOmit
+  uploadedImage?: Prisma.UploadedImageOmit
 }
 
 /* Types for Logging */

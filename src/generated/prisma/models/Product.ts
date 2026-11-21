@@ -56,6 +56,7 @@ export type ProductMinAggregateOutputType = {
   stockLimit: number | null
   stockSold: number | null
   perPlayerLimit: number | null
+  rankName: string | null
   sortOrder: number | null
   deletedAt: Date | null
   createdAt: Date | null
@@ -76,6 +77,7 @@ export type ProductMaxAggregateOutputType = {
   stockLimit: number | null
   stockSold: number | null
   perPlayerLimit: number | null
+  rankName: string | null
   sortOrder: number | null
   deletedAt: Date | null
   createdAt: Date | null
@@ -98,6 +100,7 @@ export type ProductCountAggregateOutputType = {
   stockLimit: number
   stockSold: number
   perPlayerLimit: number
+  rankName: number
   sortOrder: number
   deletedAt: number
   createdAt: number
@@ -136,6 +139,7 @@ export type ProductMinAggregateInputType = {
   stockLimit?: true
   stockSold?: true
   perPlayerLimit?: true
+  rankName?: true
   sortOrder?: true
   deletedAt?: true
   createdAt?: true
@@ -156,6 +160,7 @@ export type ProductMaxAggregateInputType = {
   stockLimit?: true
   stockSold?: true
   perPlayerLimit?: true
+  rankName?: true
   sortOrder?: true
   deletedAt?: true
   createdAt?: true
@@ -178,6 +183,7 @@ export type ProductCountAggregateInputType = {
   stockLimit?: true
   stockSold?: true
   perPlayerLimit?: true
+  rankName?: true
   sortOrder?: true
   deletedAt?: true
   createdAt?: true
@@ -287,6 +293,7 @@ export type ProductGroupByOutputType = {
   stockLimit: number | null
   stockSold: number
   perPlayerLimit: number | null
+  rankName: string | null
   sortOrder: number
   deletedAt: Date | null
   createdAt: Date
@@ -332,6 +339,7 @@ export type ProductWhereInput = {
   stockLimit?: Prisma.IntNullableFilter<"Product"> | number | null
   stockSold?: Prisma.IntFilter<"Product"> | number
   perPlayerLimit?: Prisma.IntNullableFilter<"Product"> | number | null
+  rankName?: Prisma.StringNullableFilter<"Product"> | string | null
   sortOrder?: Prisma.IntFilter<"Product"> | number
   deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -356,6 +364,7 @@ export type ProductOrderByWithRelationInput = {
   stockLimit?: Prisma.SortOrderInput | Prisma.SortOrder
   stockSold?: Prisma.SortOrder
   perPlayerLimit?: Prisma.SortOrderInput | Prisma.SortOrder
+  rankName?: Prisma.SortOrderInput | Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -383,6 +392,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   stockLimit?: Prisma.IntNullableFilter<"Product"> | number | null
   stockSold?: Prisma.IntFilter<"Product"> | number
   perPlayerLimit?: Prisma.IntNullableFilter<"Product"> | number | null
+  rankName?: Prisma.StringNullableFilter<"Product"> | string | null
   sortOrder?: Prisma.IntFilter<"Product"> | number
   deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -407,6 +417,7 @@ export type ProductOrderByWithAggregationInput = {
   stockLimit?: Prisma.SortOrderInput | Prisma.SortOrder
   stockSold?: Prisma.SortOrder
   perPlayerLimit?: Prisma.SortOrderInput | Prisma.SortOrder
+  rankName?: Prisma.SortOrderInput | Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -437,6 +448,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   stockLimit?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
   stockSold?: Prisma.IntWithAggregatesFilter<"Product"> | number
   perPlayerLimit?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  rankName?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   sortOrder?: Prisma.IntWithAggregatesFilter<"Product"> | number
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
@@ -458,6 +470,7 @@ export type ProductCreateInput = {
   stockLimit?: number | null
   stockSold?: number
   perPlayerLimit?: number | null
+  rankName?: string | null
   sortOrder?: number
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -482,6 +495,7 @@ export type ProductUncheckedCreateInput = {
   stockLimit?: number | null
   stockSold?: number
   perPlayerLimit?: number | null
+  rankName?: string | null
   sortOrder?: number
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -504,6 +518,7 @@ export type ProductUpdateInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -528,6 +543,7 @@ export type ProductUncheckedUpdateInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -551,6 +567,7 @@ export type ProductCreateManyInput = {
   stockLimit?: number | null
   stockSold?: number
   perPlayerLimit?: number | null
+  rankName?: string | null
   sortOrder?: number
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -572,6 +589,7 @@ export type ProductUpdateManyMutationInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -594,6 +612,7 @@ export type ProductUncheckedUpdateManyInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -634,6 +653,7 @@ export type ProductCountOrderByAggregateInput = {
   stockLimit?: Prisma.SortOrder
   stockSold?: Prisma.SortOrder
   perPlayerLimit?: Prisma.SortOrder
+  rankName?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -662,6 +682,7 @@ export type ProductMaxOrderByAggregateInput = {
   stockLimit?: Prisma.SortOrder
   stockSold?: Prisma.SortOrder
   perPlayerLimit?: Prisma.SortOrder
+  rankName?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -682,6 +703,7 @@ export type ProductMinOrderByAggregateInput = {
   stockLimit?: Prisma.SortOrder
   stockSold?: Prisma.SortOrder
   perPlayerLimit?: Prisma.SortOrder
+  rankName?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -804,6 +826,7 @@ export type ProductCreateWithoutCategoryInput = {
   stockLimit?: number | null
   stockSold?: number
   perPlayerLimit?: number | null
+  rankName?: string | null
   sortOrder?: number
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -826,6 +849,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   stockLimit?: number | null
   stockSold?: number
   perPlayerLimit?: number | null
+  rankName?: string | null
   sortOrder?: number
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -878,6 +902,7 @@ export type ProductScalarWhereInput = {
   stockLimit?: Prisma.IntNullableFilter<"Product"> | number | null
   stockSold?: Prisma.IntFilter<"Product"> | number
   perPlayerLimit?: Prisma.IntNullableFilter<"Product"> | number | null
+  rankName?: Prisma.StringNullableFilter<"Product"> | string | null
   sortOrder?: Prisma.IntFilter<"Product"> | number
   deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -899,6 +924,7 @@ export type ProductCreateWithoutPurchasesInput = {
   stockLimit?: number | null
   stockSold?: number
   perPlayerLimit?: number | null
+  rankName?: string | null
   sortOrder?: number
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -922,6 +948,7 @@ export type ProductUncheckedCreateWithoutPurchasesInput = {
   stockLimit?: number | null
   stockSold?: number
   perPlayerLimit?: number | null
+  rankName?: string | null
   sortOrder?: number
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -959,6 +986,7 @@ export type ProductUpdateWithoutPurchasesInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -982,6 +1010,7 @@ export type ProductUncheckedUpdateWithoutPurchasesInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1003,6 +1032,7 @@ export type ProductCreateManyCategoryInput = {
   stockLimit?: number | null
   stockSold?: number
   perPlayerLimit?: number | null
+  rankName?: string | null
   sortOrder?: number
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1024,6 +1054,7 @@ export type ProductUpdateWithoutCategoryInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1046,6 +1077,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1068,6 +1100,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   stockLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   stockSold?: Prisma.IntFieldUpdateOperationsInput | number
   perPlayerLimit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1121,6 +1154,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   stockLimit?: boolean
   stockSold?: boolean
   perPlayerLimit?: boolean
+  rankName?: boolean
   sortOrder?: boolean
   deletedAt?: boolean
   createdAt?: boolean
@@ -1146,6 +1180,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   stockLimit?: boolean
   stockSold?: boolean
   perPlayerLimit?: boolean
+  rankName?: boolean
   sortOrder?: boolean
   deletedAt?: boolean
   createdAt?: boolean
@@ -1169,6 +1204,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   stockLimit?: boolean
   stockSold?: boolean
   perPlayerLimit?: boolean
+  rankName?: boolean
   sortOrder?: boolean
   deletedAt?: boolean
   createdAt?: boolean
@@ -1192,13 +1228,14 @@ export type ProductSelectScalar = {
   stockLimit?: boolean
   stockSold?: boolean
   perPlayerLimit?: boolean
+  rankName?: boolean
   sortOrder?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "slug" | "name" | "description" | "imageUrl" | "price" | "type" | "iconMaterial" | "lore" | "commands" | "enabled" | "stockLimit" | "stockSold" | "perPlayerLimit" | "sortOrder" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "slug" | "name" | "description" | "imageUrl" | "price" | "type" | "iconMaterial" | "lore" | "commands" | "enabled" | "stockLimit" | "stockSold" | "perPlayerLimit" | "rankName" | "sortOrder" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   purchases?: boolean | Prisma.Product$purchasesArgs<ExtArgs>
@@ -1233,6 +1270,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     stockLimit: number | null
     stockSold: number
     perPlayerLimit: number | null
+    rankName: string | null
     sortOrder: number
     deletedAt: Date | null
     createdAt: Date
@@ -1677,6 +1715,7 @@ export interface ProductFieldRefs {
   readonly stockLimit: Prisma.FieldRef<"Product", 'Int'>
   readonly stockSold: Prisma.FieldRef<"Product", 'Int'>
   readonly perPlayerLimit: Prisma.FieldRef<"Product", 'Int'>
+  readonly rankName: Prisma.FieldRef<"Product", 'String'>
   readonly sortOrder: Prisma.FieldRef<"Product", 'Int'>
   readonly deletedAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>

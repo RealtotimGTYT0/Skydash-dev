@@ -131,3 +131,18 @@ export type VoteSite = Prisma.VoteSiteModel
  * 
  */
 export type VoteRecord = Prisma.VoteRecordModel
+/**
+ * Model Rank
+ * 
+ */
+export type Rank = Prisma.RankModel
+/**
+ * Model AccountRank
+ * 
+ */
+export type AccountRank = Prisma.AccountRankModel
+/**
+ * Model UploadedImage
+ * Pictures uploaded by admins (product, logo, background). Stored in the database because the website host has no permanent disk.
+ */
+export type UploadedImage = Prisma.UploadedImageModel
