@@ -25,6 +25,9 @@ export default async function AdminAppearance({ searchParams }: { searchParams: 
         <div><label className="label" htmlFor="logoUrl">…or logo link (https://…, empty = no logo)</label><input id="logoUrl" name="logoUrl" defaultValue={a.logoUrl ?? ""} className="input" placeholder="https://i.imgur.com/logo.png" /></div>
         <div><label className="label" htmlFor="backgroundFile">Background: upload a file</label><input id="backgroundFile" name="backgroundFile" type="file" accept="image/png,image/jpeg,image/gif,image/webp" className="input" /></div>
         <div><label className="label" htmlFor="backgroundUrl">…or background link (https://…, empty = none)</label><input id="backgroundUrl" name="backgroundUrl" defaultValue={a.backgroundUrl ?? ""} className="input" placeholder="https://i.imgur.com/background.jpg" /></div>
+        <div><label className="label" htmlFor="faviconFile">Favicon (browser tab icon): upload a file</label><input id="faviconFile" name="faviconFile" type="file" accept="image/png,image/jpeg,image/gif,image/webp" className="input" /></div>
+        <div><label className="label" htmlFor="faviconUrl">…or favicon link (https://…, empty = default)</label><input id="faviconUrl" name="faviconUrl" defaultValue={a.faviconUrl ?? ""} className="input" placeholder="https://i.imgur.com/icon.png" /></div>
+        <div><label className="label" htmlFor="discordUrl">Discord invite link (https://…, empty = none). Used by /discord on the website and in game.</label><input id="discordUrl" name="discordUrl" defaultValue={a.discordUrl ?? ""} className="input" placeholder="https://discord.gg/yourcode" maxLength={200} /></div>
         <div><label className="label" htmlFor="defaultTheme">Default theme for visitors</label>
           <select id="defaultTheme" name="defaultTheme" defaultValue={a.defaultTheme} className="input">
             <optgroup label="Normal">{STATIC_THEMES.map((t) => <option key={t} value={t}>{t}</option>)}</optgroup>

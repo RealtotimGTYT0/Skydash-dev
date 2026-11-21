@@ -4,6 +4,7 @@ import { AppError } from "../lib/errors.ts";
 import { parseCommandLines } from "../lib/commands.ts";
 
 type Actor = { actorUserId?: string | null; actorLabel?: string | null };
+export const MAX_RANK_COMMANDS = 20;
 const NAME = /^[a-z0-9_-]{1,32}$/;
 
 const norm = (name: string) => {
@@ -52,7 +53,22 @@ export async function setRankCommands(db: Db, p: { name: string; kind: "grant" |
   const name = norm(p.name);
   const r = await db.rank.findUnique({ where: { name } });
   if (!r) throw new AppError("NOT_FOUND", `No rank called "${name}"`);
-  const commands = parseCommandLines(p.commands.join("\n"), "command", 10);
+  const commands = parseCommandLines(p.commands.join("\n"), "command", MAX_RANK_COMMANDS);
+  await db.$transaction(async (tx) => {
+    await tx.rank.update({ where: { id: r.id }, data: p.kind === "grant" ? { grantCommands: commands } : { revokeCommands: commands } });
+    await writeAudit(tx, { ...actor, action: "rank.commands", targetType: "rank", targetId: r.id, details: { kind: p.kind, count: commands.length } });
+  });
+  return commands;
+}
+
+/** Adds one more command to a rank's grant or revoke list (keeps the ones already there). */
+export async function addRankCommand(db: Db, p: { name: string; kind: "grant" | "revoke"; command: string }, actor: Actor) {
+  const name = norm(p.name);
+  const r = await db.rank.findUnique({ where: { name } });
+  if (!r) throw new AppError("NOT_FOUND", `No rank called "${name}"`);
+  const [added] = parseCommandLines(p.command, "command", 1);
+  if (!added) throw new AppError("VALIDATION", "Command is empty");
+  const commands = parseCommandLines([...(p.kind === "grant" ? r.grantCommands : r.revokeCommands), added].join("\n"), "command", MAX_RANK_COMMANDS);
   await db.$transaction(async (tx) => {
     await tx.rank.update({ where: { id: r.id }, data: p.kind === "grant" ? { grantCommands: commands } : { revokeCommands: commands } });
     await writeAudit(tx, { ...actor, action: "rank.commands", targetType: "rank", targetId: r.id, details: { kind: p.kind, count: commands.length } });

@@ -41,7 +41,7 @@ export async function history(db: DbOrTx, mcAccountId: string, limit: number): P
 
 export interface CatalogProduct {
   id: string; name: string; description: string; price: number; type: string;
-  iconMaterial: string; lore: string[]; imageUrl: string | null; rankName: string | null;
+  iconMaterial: string; lore: string[]; imageUrl: string | null;
   /** null = unlimited */
   stockRemaining: number | null; perPlayerLimit: number | null;
 }
@@ -68,10 +68,10 @@ export async function catalog(db: DbOrTx): Promise<CatalogCategory[]> {
     .map((c) => ({
       id: c.id, slug: c.slug, name: c.name, description: c.description, iconMaterial: c.iconMaterial,
       products: c.products
-        .filter((p) => (p.commands.length > 0 || p.rankName !== null) && (p.stockLimit === null || p.stockSold < p.stockLimit))
+        .filter((p) => p.commands.length > 0 && (p.stockLimit === null || p.stockSold < p.stockLimit))
         .map((p) => ({
           id: p.id, name: p.name, description: p.description, price: p.price, type: p.type,
-          iconMaterial: p.iconMaterial, lore: p.lore, imageUrl: p.imageUrl, rankName: p.rankName,
+          iconMaterial: p.iconMaterial, lore: p.lore, imageUrl: p.imageUrl,
           stockRemaining: p.stockLimit === null ? null : p.stockLimit - p.stockSold,
           perPlayerLimit: p.perPlayerLimit,
         })),

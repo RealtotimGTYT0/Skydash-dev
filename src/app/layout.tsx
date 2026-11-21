@@ -8,10 +8,13 @@ import { ALL_THEMES, STATIC_THEMES, ANIMATED_THEMES, effectiveTheme, getAppearan
 import { currentAuth, csrfToken } from "../web/session.ts";
 import { logoutAction, setThemeAction } from "./actions.ts";
 
-export const metadata: Metadata = { title: "TokenStore", description: "Earn tokens by playing. Spend them in the shop." };
+export async function generateMetadata(): Promise<Metadata> {
+  const look = await getAppearance(getPrisma()).catch(() => null);
+  return { title: look?.siteName || "TokenStore", description: "Earn tokens by playing. Spend them in the shop.", ...(look?.faviconUrl ? { icons: { icon: look.faviconUrl } } : {}) };
+}
 export const dynamic = "force-dynamic";
 
-const FALLBACK: Appearance = { siteName: "TokenStore", logoUrl: null, backgroundUrl: null, defaultTheme: "dark" };
+const FALLBACK: Appearance = { siteName: "TokenStore", logoUrl: null, backgroundUrl: null, defaultTheme: "dark", faviconUrl: null, discordUrl: null };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const auth = await currentAuth().catch(() => null);
@@ -32,6 +35,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             </Link>
             <Link href="/shop">Shop</Link>
             <Link href="/vote">Vote</Link>
+            {look.discordUrl && <Link href="/discord">Discord</Link>}
             <span className="flex-1" />
             <details className="relative">
               <summary className="btn-ghost cursor-pointer list-none">Theme</summary>

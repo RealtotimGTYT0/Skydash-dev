@@ -143,7 +143,6 @@ model MinecraftAccount {
   rewards         RewardQueue[]
   playtimeRecords PlaytimeRecord[]
   voteRecords     VoteRecord[]
-  ranks           AccountRank[]
 
   @@index([username])
   @@map("minecraft_accounts")
@@ -280,8 +279,6 @@ model Product {
   stockLimit     Int?        @map("stock_limit")
   stockSold      Int         @default(0) @map("stock_sold")
   perPlayerLimit Int?        @map("per_player_limit")
-  // When set, buying this also gives the player this rank (its grant commands run on delivery).
-  rankName       String?     @map("rank_name") @db.VarChar(32)
   sortOrder      Int         @default(0) @map("sort_order")
   // Soft delete keeps purchase history intact.
   deletedAt      DateTime?   @map("deleted_at") @db.Timestamptz(3)
@@ -442,48 +439,4 @@ model VoteRecord {
 
   @@index([mcAccountId, serviceName, createdAt(sort: Desc)])
   @@map("vote_records")
-}
-
-// Ranks an admin creates in-game (/tokens admin rank ...). Shown on the website; optional console commands run on grant/revoke.
-model Rank {
-  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  // Short lowercase id used in commands, e.g. "vip".
-  name           String   @unique @db.VarChar(32)
-  // What players see. MiniMessage allowed (colors, bold, gradients), e.g. "<gradient:#ffaa00:#ff5500>VIP</gradient>".
-  displayName    String   @map("display_name") @db.VarChar(120)
-  // Higher = shown first when a player has several ranks.
-  priority       Int      @default(0)
-  grantCommands  String[] @map("grant_commands")
-  revokeCommands String[] @map("revoke_commands")
-  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-
-  holders AccountRank[]
-
-  @@map("ranks")
-}
-
-model AccountRank {
-  mcAccountId String   @map("mc_account_id") @db.Uuid
-  rankId      String   @map("rank_id") @db.Uuid
-  grantedBy   String?  @map("granted_by") @db.VarChar(64)
-  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-
-  account MinecraftAccount @relation(fields: [mcAccountId], references: [id], onDelete: Cascade)
-  rank    Rank             @relation(fields: [rankId], references: [id], onDelete: Cascade)
-
-  @@id([mcAccountId, rankId])
-  @@index([rankId])
-  @@map("account_ranks")
-}
-
-/// Pictures uploaded by admins (product, logo, background). Stored in the database because the website host has no permanent disk.
-model UploadedImage {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  mime      String   @db.VarChar(32)
-  data      Bytes
-  size      Int
-  createdBy String?  @map("created_by") @db.VarChar(64)
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-
-  @@map("uploaded_images")
 }

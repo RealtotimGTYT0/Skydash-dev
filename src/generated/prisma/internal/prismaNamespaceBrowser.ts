@@ -68,10 +68,7 @@ export const ModelName = {
   Setting: 'Setting',
   RateLimitBucket: 'RateLimitBucket',
   VoteSite: 'VoteSite',
-  VoteRecord: 'VoteRecord',
-  Rank: 'Rank',
-  AccountRank: 'AccountRank',
-  UploadedImage: 'UploadedImage'
+  VoteRecord: 'VoteRecord'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -231,7 +228,6 @@ export const ProductScalarFieldEnum = {
   stockLimit: 'stockLimit',
   stockSold: 'stockSold',
   perPlayerLimit: 'perPlayerLimit',
-  rankName: 'rankName',
   sortOrder: 'sortOrder',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
@@ -359,41 +355,6 @@ export const VoteRecordScalarFieldEnum = {
 } as const
 
 export type VoteRecordScalarFieldEnum = (typeof VoteRecordScalarFieldEnum)[keyof typeof VoteRecordScalarFieldEnum]
-
-
-export const RankScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  displayName: 'displayName',
-  priority: 'priority',
-  grantCommands: 'grantCommands',
-  revokeCommands: 'revokeCommands',
-  createdAt: 'createdAt'
-} as const
-
-export type RankScalarFieldEnum = (typeof RankScalarFieldEnum)[keyof typeof RankScalarFieldEnum]
-
-
-export const AccountRankScalarFieldEnum = {
-  mcAccountId: 'mcAccountId',
-  rankId: 'rankId',
-  grantedBy: 'grantedBy',
-  createdAt: 'createdAt'
-} as const
-
-export type AccountRankScalarFieldEnum = (typeof AccountRankScalarFieldEnum)[keyof typeof AccountRankScalarFieldEnum]
-
-
-export const UploadedImageScalarFieldEnum = {
-  id: 'id',
-  mime: 'mime',
-  data: 'data',
-  size: 'size',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type UploadedImageScalarFieldEnum = (typeof UploadedImageScalarFieldEnum)[keyof typeof UploadedImageScalarFieldEnum]
 
 
 export const SortOrder = {

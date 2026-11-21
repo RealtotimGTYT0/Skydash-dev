@@ -11,7 +11,7 @@ const noControlChars = (s: string) => !/[\u0000-\u001f\u007f]/.test(s);
 export const minecraftUsername = z
   .string()
   .trim()
-  .regex(/^[A-Za-z0-9_.+]{3,16}$/, "Minecraft usernames are 3-16 characters: letters, numbers, underscores, dots and plus signs");
+  .regex(/^[A-Za-z0-9_]{3,16}$/, "Minecraft usernames are 3-16 characters: letters, numbers and underscores");
 
 export const displayName = z
   .string()

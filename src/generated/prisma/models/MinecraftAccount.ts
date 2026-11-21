@@ -275,7 +275,6 @@ export type MinecraftAccountWhereInput = {
   rewards?: Prisma.RewardQueueListRelationFilter
   playtimeRecords?: Prisma.PlaytimeRecordListRelationFilter
   voteRecords?: Prisma.VoteRecordListRelationFilter
-  ranks?: Prisma.AccountRankListRelationFilter
 }
 
 export type MinecraftAccountOrderByWithRelationInput = {
@@ -297,7 +296,6 @@ export type MinecraftAccountOrderByWithRelationInput = {
   rewards?: Prisma.RewardQueueOrderByRelationAggregateInput
   playtimeRecords?: Prisma.PlaytimeRecordOrderByRelationAggregateInput
   voteRecords?: Prisma.VoteRecordOrderByRelationAggregateInput
-  ranks?: Prisma.AccountRankOrderByRelationAggregateInput
 }
 
 export type MinecraftAccountWhereUniqueInput = Prisma.AtLeast<{
@@ -322,7 +320,6 @@ export type MinecraftAccountWhereUniqueInput = Prisma.AtLeast<{
   rewards?: Prisma.RewardQueueListRelationFilter
   playtimeRecords?: Prisma.PlaytimeRecordListRelationFilter
   voteRecords?: Prisma.VoteRecordListRelationFilter
-  ranks?: Prisma.AccountRankListRelationFilter
 }, "id" | "mcUuid" | "userId">
 
 export type MinecraftAccountOrderByWithAggregationInput = {
@@ -379,7 +376,6 @@ export type MinecraftAccountCreateInput = {
   rewards?: Prisma.RewardQueueCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUncheckedCreateInput = {
@@ -400,7 +396,6 @@ export type MinecraftAccountUncheckedCreateInput = {
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordUncheckedCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankUncheckedCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUpdateInput = {
@@ -421,7 +416,6 @@ export type MinecraftAccountUpdateInput = {
   rewards?: Prisma.RewardQueueUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountUncheckedUpdateInput = {
@@ -442,7 +436,6 @@ export type MinecraftAccountUncheckedUpdateInput = {
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUncheckedUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUncheckedUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountCreateManyInput = {
@@ -676,20 +669,6 @@ export type MinecraftAccountUpdateOneRequiredWithoutVoteRecordsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MinecraftAccountUpdateToOneWithWhereWithoutVoteRecordsInput, Prisma.MinecraftAccountUpdateWithoutVoteRecordsInput>, Prisma.MinecraftAccountUncheckedUpdateWithoutVoteRecordsInput>
 }
 
-export type MinecraftAccountCreateNestedOneWithoutRanksInput = {
-  create?: Prisma.XOR<Prisma.MinecraftAccountCreateWithoutRanksInput, Prisma.MinecraftAccountUncheckedCreateWithoutRanksInput>
-  connectOrCreate?: Prisma.MinecraftAccountCreateOrConnectWithoutRanksInput
-  connect?: Prisma.MinecraftAccountWhereUniqueInput
-}
-
-export type MinecraftAccountUpdateOneRequiredWithoutRanksNestedInput = {
-  create?: Prisma.XOR<Prisma.MinecraftAccountCreateWithoutRanksInput, Prisma.MinecraftAccountUncheckedCreateWithoutRanksInput>
-  connectOrCreate?: Prisma.MinecraftAccountCreateOrConnectWithoutRanksInput
-  upsert?: Prisma.MinecraftAccountUpsertWithoutRanksInput
-  connect?: Prisma.MinecraftAccountWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.MinecraftAccountUpdateToOneWithWhereWithoutRanksInput, Prisma.MinecraftAccountUpdateWithoutRanksInput>, Prisma.MinecraftAccountUncheckedUpdateWithoutRanksInput>
-}
-
 export type MinecraftAccountCreateWithoutUserInput = {
   id?: string
   mcUuid: string
@@ -707,7 +686,6 @@ export type MinecraftAccountCreateWithoutUserInput = {
   rewards?: Prisma.RewardQueueCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUncheckedCreateWithoutUserInput = {
@@ -727,7 +705,6 @@ export type MinecraftAccountUncheckedCreateWithoutUserInput = {
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordUncheckedCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankUncheckedCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountCreateOrConnectWithoutUserInput = {
@@ -763,7 +740,6 @@ export type MinecraftAccountUpdateWithoutUserInput = {
   rewards?: Prisma.RewardQueueUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountUncheckedUpdateWithoutUserInput = {
@@ -783,7 +759,6 @@ export type MinecraftAccountUncheckedUpdateWithoutUserInput = {
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUncheckedUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUncheckedUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountCreateWithoutBalanceInput = {
@@ -803,7 +778,6 @@ export type MinecraftAccountCreateWithoutBalanceInput = {
   rewards?: Prisma.RewardQueueCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUncheckedCreateWithoutBalanceInput = {
@@ -823,7 +797,6 @@ export type MinecraftAccountUncheckedCreateWithoutBalanceInput = {
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordUncheckedCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankUncheckedCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountCreateOrConnectWithoutBalanceInput = {
@@ -859,7 +832,6 @@ export type MinecraftAccountUpdateWithoutBalanceInput = {
   rewards?: Prisma.RewardQueueUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountUncheckedUpdateWithoutBalanceInput = {
@@ -879,7 +851,6 @@ export type MinecraftAccountUncheckedUpdateWithoutBalanceInput = {
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUncheckedUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUncheckedUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountCreateWithoutTransactionsInput = {
@@ -899,7 +870,6 @@ export type MinecraftAccountCreateWithoutTransactionsInput = {
   rewards?: Prisma.RewardQueueCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUncheckedCreateWithoutTransactionsInput = {
@@ -919,7 +889,6 @@ export type MinecraftAccountUncheckedCreateWithoutTransactionsInput = {
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordUncheckedCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankUncheckedCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountCreateOrConnectWithoutTransactionsInput = {
@@ -955,7 +924,6 @@ export type MinecraftAccountUpdateWithoutTransactionsInput = {
   rewards?: Prisma.RewardQueueUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountUncheckedUpdateWithoutTransactionsInput = {
@@ -975,7 +943,6 @@ export type MinecraftAccountUncheckedUpdateWithoutTransactionsInput = {
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUncheckedUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUncheckedUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountCreateWithoutPlaytimeRecordsInput = {
@@ -995,7 +962,6 @@ export type MinecraftAccountCreateWithoutPlaytimeRecordsInput = {
   purchases?: Prisma.PurchaseCreateNestedManyWithoutAccountInput
   rewards?: Prisma.RewardQueueCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUncheckedCreateWithoutPlaytimeRecordsInput = {
@@ -1015,7 +981,6 @@ export type MinecraftAccountUncheckedCreateWithoutPlaytimeRecordsInput = {
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordUncheckedCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankUncheckedCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountCreateOrConnectWithoutPlaytimeRecordsInput = {
@@ -1051,7 +1016,6 @@ export type MinecraftAccountUpdateWithoutPlaytimeRecordsInput = {
   purchases?: Prisma.PurchaseUpdateManyWithoutAccountNestedInput
   rewards?: Prisma.RewardQueueUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountUncheckedUpdateWithoutPlaytimeRecordsInput = {
@@ -1071,7 +1035,6 @@ export type MinecraftAccountUncheckedUpdateWithoutPlaytimeRecordsInput = {
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUncheckedUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUncheckedUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountCreateWithoutPurchasesInput = {
@@ -1091,7 +1054,6 @@ export type MinecraftAccountCreateWithoutPurchasesInput = {
   rewards?: Prisma.RewardQueueCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUncheckedCreateWithoutPurchasesInput = {
@@ -1111,7 +1073,6 @@ export type MinecraftAccountUncheckedCreateWithoutPurchasesInput = {
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordUncheckedCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankUncheckedCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountCreateOrConnectWithoutPurchasesInput = {
@@ -1147,7 +1108,6 @@ export type MinecraftAccountUpdateWithoutPurchasesInput = {
   rewards?: Prisma.RewardQueueUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountUncheckedUpdateWithoutPurchasesInput = {
@@ -1167,7 +1127,6 @@ export type MinecraftAccountUncheckedUpdateWithoutPurchasesInput = {
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUncheckedUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUncheckedUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountCreateWithoutRewardsInput = {
@@ -1187,7 +1146,6 @@ export type MinecraftAccountCreateWithoutRewardsInput = {
   purchases?: Prisma.PurchaseCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUncheckedCreateWithoutRewardsInput = {
@@ -1207,7 +1165,6 @@ export type MinecraftAccountUncheckedCreateWithoutRewardsInput = {
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedCreateNestedManyWithoutAccountInput
   voteRecords?: Prisma.VoteRecordUncheckedCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankUncheckedCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountCreateOrConnectWithoutRewardsInput = {
@@ -1243,7 +1200,6 @@ export type MinecraftAccountUpdateWithoutRewardsInput = {
   purchases?: Prisma.PurchaseUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountUncheckedUpdateWithoutRewardsInput = {
@@ -1263,7 +1219,6 @@ export type MinecraftAccountUncheckedUpdateWithoutRewardsInput = {
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedUpdateManyWithoutAccountNestedInput
   voteRecords?: Prisma.VoteRecordUncheckedUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUncheckedUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountCreateWithoutVoteRecordsInput = {
@@ -1283,7 +1238,6 @@ export type MinecraftAccountCreateWithoutVoteRecordsInput = {
   purchases?: Prisma.PurchaseCreateNestedManyWithoutAccountInput
   rewards?: Prisma.RewardQueueCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountUncheckedCreateWithoutVoteRecordsInput = {
@@ -1303,7 +1257,6 @@ export type MinecraftAccountUncheckedCreateWithoutVoteRecordsInput = {
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedCreateNestedManyWithoutAccountInput
-  ranks?: Prisma.AccountRankUncheckedCreateNestedManyWithoutAccountInput
 }
 
 export type MinecraftAccountCreateOrConnectWithoutVoteRecordsInput = {
@@ -1339,7 +1292,6 @@ export type MinecraftAccountUpdateWithoutVoteRecordsInput = {
   purchases?: Prisma.PurchaseUpdateManyWithoutAccountNestedInput
   rewards?: Prisma.RewardQueueUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUpdateManyWithoutAccountNestedInput
 }
 
 export type MinecraftAccountUncheckedUpdateWithoutVoteRecordsInput = {
@@ -1359,103 +1311,6 @@ export type MinecraftAccountUncheckedUpdateWithoutVoteRecordsInput = {
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
   playtimeRecords?: Prisma.PlaytimeRecordUncheckedUpdateManyWithoutAccountNestedInput
-  ranks?: Prisma.AccountRankUncheckedUpdateManyWithoutAccountNestedInput
-}
-
-export type MinecraftAccountCreateWithoutRanksInput = {
-  id?: string
-  mcUuid: string
-  username: string
-  accountType?: $Enums.AccountType | null
-  onlineModeVerified?: boolean
-  linkedAt?: Date | string | null
-  playtimeTotalSeconds?: number
-  playtimeCarrySeconds?: number
-  firstSeenAt?: Date | string
-  lastSeenAt?: Date | string
-  user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
-  balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
-  transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutAccountInput
-  rewards?: Prisma.RewardQueueCreateNestedManyWithoutAccountInput
-  playtimeRecords?: Prisma.PlaytimeRecordCreateNestedManyWithoutAccountInput
-  voteRecords?: Prisma.VoteRecordCreateNestedManyWithoutAccountInput
-}
-
-export type MinecraftAccountUncheckedCreateWithoutRanksInput = {
-  id?: string
-  mcUuid: string
-  username: string
-  userId?: string | null
-  accountType?: $Enums.AccountType | null
-  onlineModeVerified?: boolean
-  linkedAt?: Date | string | null
-  playtimeTotalSeconds?: number
-  playtimeCarrySeconds?: number
-  firstSeenAt?: Date | string
-  lastSeenAt?: Date | string
-  balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
-  transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
-  rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
-  playtimeRecords?: Prisma.PlaytimeRecordUncheckedCreateNestedManyWithoutAccountInput
-  voteRecords?: Prisma.VoteRecordUncheckedCreateNestedManyWithoutAccountInput
-}
-
-export type MinecraftAccountCreateOrConnectWithoutRanksInput = {
-  where: Prisma.MinecraftAccountWhereUniqueInput
-  create: Prisma.XOR<Prisma.MinecraftAccountCreateWithoutRanksInput, Prisma.MinecraftAccountUncheckedCreateWithoutRanksInput>
-}
-
-export type MinecraftAccountUpsertWithoutRanksInput = {
-  update: Prisma.XOR<Prisma.MinecraftAccountUpdateWithoutRanksInput, Prisma.MinecraftAccountUncheckedUpdateWithoutRanksInput>
-  create: Prisma.XOR<Prisma.MinecraftAccountCreateWithoutRanksInput, Prisma.MinecraftAccountUncheckedCreateWithoutRanksInput>
-  where?: Prisma.MinecraftAccountWhereInput
-}
-
-export type MinecraftAccountUpdateToOneWithWhereWithoutRanksInput = {
-  where?: Prisma.MinecraftAccountWhereInput
-  data: Prisma.XOR<Prisma.MinecraftAccountUpdateWithoutRanksInput, Prisma.MinecraftAccountUncheckedUpdateWithoutRanksInput>
-}
-
-export type MinecraftAccountUpdateWithoutRanksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  mcUuid?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  accountType?: Prisma.NullableEnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType | null
-  onlineModeVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  linkedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  playtimeTotalSeconds?: Prisma.IntFieldUpdateOperationsInput | number
-  playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
-  firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
-  balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
-  transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutAccountNestedInput
-  rewards?: Prisma.RewardQueueUpdateManyWithoutAccountNestedInput
-  playtimeRecords?: Prisma.PlaytimeRecordUpdateManyWithoutAccountNestedInput
-  voteRecords?: Prisma.VoteRecordUpdateManyWithoutAccountNestedInput
-}
-
-export type MinecraftAccountUncheckedUpdateWithoutRanksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  mcUuid?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountType?: Prisma.NullableEnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType | null
-  onlineModeVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  linkedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  playtimeTotalSeconds?: Prisma.IntFieldUpdateOperationsInput | number
-  playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
-  firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
-  transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
-  rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
-  playtimeRecords?: Prisma.PlaytimeRecordUncheckedUpdateManyWithoutAccountNestedInput
-  voteRecords?: Prisma.VoteRecordUncheckedUpdateManyWithoutAccountNestedInput
 }
 
 
@@ -1469,7 +1324,6 @@ export type MinecraftAccountCountOutputType = {
   rewards: number
   playtimeRecords: number
   voteRecords: number
-  ranks: number
 }
 
 export type MinecraftAccountCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1478,7 +1332,6 @@ export type MinecraftAccountCountOutputTypeSelect<ExtArgs extends runtime.Types.
   rewards?: boolean | MinecraftAccountCountOutputTypeCountRewardsArgs
   playtimeRecords?: boolean | MinecraftAccountCountOutputTypeCountPlaytimeRecordsArgs
   voteRecords?: boolean | MinecraftAccountCountOutputTypeCountVoteRecordsArgs
-  ranks?: boolean | MinecraftAccountCountOutputTypeCountRanksArgs
 }
 
 /**
@@ -1526,13 +1379,6 @@ export type MinecraftAccountCountOutputTypeCountVoteRecordsArgs<ExtArgs extends 
   where?: Prisma.VoteRecordWhereInput
 }
 
-/**
- * MinecraftAccountCountOutputType without action
- */
-export type MinecraftAccountCountOutputTypeCountRanksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AccountRankWhereInput
-}
-
 
 export type MinecraftAccountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1553,7 +1399,6 @@ export type MinecraftAccountSelect<ExtArgs extends runtime.Types.Extensions.Inte
   rewards?: boolean | Prisma.MinecraftAccount$rewardsArgs<ExtArgs>
   playtimeRecords?: boolean | Prisma.MinecraftAccount$playtimeRecordsArgs<ExtArgs>
   voteRecords?: boolean | Prisma.MinecraftAccount$voteRecordsArgs<ExtArgs>
-  ranks?: boolean | Prisma.MinecraftAccount$ranksArgs<ExtArgs>
   _count?: boolean | Prisma.MinecraftAccountCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["minecraftAccount"]>
 
@@ -1610,7 +1455,6 @@ export type MinecraftAccountInclude<ExtArgs extends runtime.Types.Extensions.Int
   rewards?: boolean | Prisma.MinecraftAccount$rewardsArgs<ExtArgs>
   playtimeRecords?: boolean | Prisma.MinecraftAccount$playtimeRecordsArgs<ExtArgs>
   voteRecords?: boolean | Prisma.MinecraftAccount$voteRecordsArgs<ExtArgs>
-  ranks?: boolean | Prisma.MinecraftAccount$ranksArgs<ExtArgs>
   _count?: boolean | Prisma.MinecraftAccountCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MinecraftAccountIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1630,7 +1474,6 @@ export type $MinecraftAccountPayload<ExtArgs extends runtime.Types.Extensions.In
     rewards: Prisma.$RewardQueuePayload<ExtArgs>[]
     playtimeRecords: Prisma.$PlaytimeRecordPayload<ExtArgs>[]
     voteRecords: Prisma.$VoteRecordPayload<ExtArgs>[]
-    ranks: Prisma.$AccountRankPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2045,7 +1888,6 @@ export interface Prisma__MinecraftAccountClient<T, Null = never, ExtArgs extends
   rewards<T extends Prisma.MinecraftAccount$rewardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MinecraftAccount$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RewardQueuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   playtimeRecords<T extends Prisma.MinecraftAccount$playtimeRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MinecraftAccount$playtimeRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlaytimeRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   voteRecords<T extends Prisma.MinecraftAccount$voteRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MinecraftAccount$voteRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VoteRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  ranks<T extends Prisma.MinecraftAccount$ranksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MinecraftAccount$ranksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountRankPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2642,30 +2484,6 @@ export type MinecraftAccount$voteRecordsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.VoteRecordScalarFieldEnum | Prisma.VoteRecordScalarFieldEnum[]
-}
-
-/**
- * MinecraftAccount.ranks
- */
-export type MinecraftAccount$ranksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AccountRank
-   */
-  select?: Prisma.AccountRankSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AccountRank
-   */
-  omit?: Prisma.AccountRankOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AccountRankInclude<ExtArgs> | null
-  where?: Prisma.AccountRankWhereInput
-  orderBy?: Prisma.AccountRankOrderByWithRelationInput | Prisma.AccountRankOrderByWithRelationInput[]
-  cursor?: Prisma.AccountRankWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AccountRankScalarFieldEnum | Prisma.AccountRankScalarFieldEnum[]
 }
 
 /**

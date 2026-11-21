@@ -5,7 +5,6 @@ import { getEarningConfig } from "../../services/settings.ts";
 import { adminAdjustAction, adminRateAction, adminVoteAction } from "../actions.ts";
 import { getVoteConfig, listVoteSites } from "../../services/votes.ts";
 import { Notice } from "../Notice.tsx";
-import { AdminNav } from "./AdminNav.tsx";
 
 export default async function Admin({ searchParams }: { searchParams: Promise<{ e?: string; ok?: string }> }) {
   const auth = await currentAuth();
@@ -26,7 +25,6 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Admin</h1>
-      <AdminNav current="overview" />
       <Notice error={e} ok={ok} />
       <section className="card"><h2 className="mb-2 font-semibold">Connected servers</h2>
         {servers.length === 0 ? <p className="text-sm text-zinc-400">No server has contacted the site yet.</p> : servers.map((s) => <p key={s.id} className="text-sm">{s.name} <span className="text-zinc-500">last seen {s.lastSeenAt?.toISOString().slice(0, 16).replace("T", " ")}</span></p>)}</section>

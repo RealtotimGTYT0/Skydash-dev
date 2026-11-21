@@ -10,7 +10,8 @@ import { adminAdjustTokens } from "../services/admin-tokens.ts";
 import { confirmInGame } from "../services/linking.ts";
 import { recordPlaytime } from "../services/playtime.ts";
 import { getVoteConfig, listVoteSites, recordVote } from "../services/votes.ts";
-import { createRank, deleteRank, grantRank, listRanks, ranksOf, revokeRank, setRankCommands, updateRank } from "../services/ranks.ts";
+import { getAppearance } from "../services/appearance.ts";
+import { addRankCommand, createRank, deleteRank, grantRank, listRanks, ranksOf, revokeRank, setRankCommands, updateRank } from "../services/ranks.ts";
 import { listWebAdmins, setWebAdmin } from "../services/web-admins.ts";
 import { createPurchase } from "../services/purchases.ts";
 import { catalog, findAccountByUsername, findAccountByUuid, history, leaderboard } from "../services/queries.ts";
@@ -73,6 +74,7 @@ const schemas = {
   }),
   vote: z.object({ username: mcName, serviceName: z.string().min(1).max(64), idempotencyKey: idemKey }),
   "vote/info": z.object({}),
+  discord: z.object({}),
   shop: z.object({}),
   purchase: z.object({ mcUuid: uuidStr, productId: z.string().min(32).max(40), idempotencyKey: idemKey }),
   admin: z.object({
@@ -85,12 +87,12 @@ const schemas = {
     actorUuid: uuidStr.optional(),
   }),
   rank: z.object({
-    action: z.enum(["create", "delete", "update", "setcmd", "list", "give", "remove", "info"]),
+    action: z.enum(["create", "delete", "update", "setcmd", "addcmd", "list", "give", "remove", "info"]),
     name: z.string().max(32).optional(),
     displayName: z.string().max(120).optional(),
     priority: z.number().int().optional(),
     kind: z.enum(["grant", "revoke"]).optional(),
-    commands: z.array(z.string().max(300)).max(10).optional(),
+    commands: z.array(z.string().max(300)).max(20).optional(),
     username: mcName.optional(),
     actorName: z.string().min(1).max(32),
   }),
@@ -140,6 +142,10 @@ const handlers: { [R in Route]: (c: Ctx, body: z.output<(typeof schemas)[R]>) =>
   async "vote/info"(c) {
     const [cfg, sites] = await Promise.all([getVoteConfig(c.db), listVoteSites(c.db)]);
     return { tokens: cfg.tokens, cooldownHours: cfg.cooldownHours, sites };
+  },
+
+  async discord(c) {
+    return { url: (await getAppearance(c.db)).discordUrl };
   },
 
   async playtime(c, b) {
@@ -229,6 +235,7 @@ const handlers: { [R in Route]: (c: Ctx, body: z.output<(typeof schemas)[R]>) =>
       case "update": { const r = await updateRank(c.db, { name: need(b.name, "rank name"), displayName: b.displayName, priority: b.priority }, actor); return { name: r.name, displayName: r.displayName, priority: r.priority }; }
       case "delete": return deleteRank(c.db, need(b.name, "rank name"), actor);
       case "setcmd": return { commands: await setRankCommands(c.db, { name: need(b.name, "rank name"), kind: b.kind ?? "grant", commands: b.commands ?? [] }, actor) };
+      case "addcmd": return { commands: await addRankCommand(c.db, { name: need(b.name, "rank name"), kind: b.kind ?? "grant", command: need(b.commands?.[0], "command") }, actor) };
       case "info": {
         const account = await findAccountByUsername(c.db, need(b.username, "player name"));
         if (!account) throw new AppError("NOT_FOUND", "That player has never joined the server");
