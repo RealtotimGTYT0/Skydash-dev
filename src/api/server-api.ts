@@ -38,7 +38,7 @@ const MAX_BODY_BYTES = 256 * 1024;
 const PREFIX = "/api/server/";
 
 const uuidStr = z.string().min(32).max(40);
-const mcName = z.string().regex(/^[A-Za-z0-9_]{3,16}$/, "Invalid Minecraft username");
+const mcName = z.string().regex(/^[A-Za-z0-9_.+]{3,16}$/, "Invalid Minecraft username");
 const idemKey = z.string().min(8).max(128);
 const isoDate = z.string().max(40).refine((s) => !Number.isNaN(Date.parse(s)), "Invalid date").transform((s) => new Date(s));
 const seconds = z.number().int().min(0).max(10 * 24 * 3600);
