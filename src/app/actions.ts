@@ -16,6 +16,7 @@ import { revalidatePath } from "next/cache";
 import { ALL_THEMES, isAnimated, setAppearance } from "../services/appearance.ts";
 import { deleteCategory, deleteProduct, saveCategory, saveProduct } from "../services/catalog-admin.ts";
 import { saveImage } from "../services/images.ts";
+import { setLeaderboardHidden } from "../services/leaderboard-admin.ts";
 import { createRank, setRankCommands, updateRank } from "../services/ranks.ts";
 import { parseVoteSites, replaceVoteSites, setVoteConfig } from "../services/votes.ts";
 import { clearSessionCookies, clientContext, currentAuth, FLASH_COOKIE, guard, safeMessage, setSessionCookies } from "../web/session.ts";
@@ -225,4 +226,19 @@ export async function saveRankAction(form: FormData) {
     msg = `Rank ${name.trim().toLowerCase()} saved`;
   } catch (e) { return back("/admin/ranks", { e: safeMessage(e) }); }
   back("/admin/ranks", { ok: msg });
+}
+
+export async function adminLeaderboardAction(form: FormData) {
+  let message = "";
+  try {
+    const ctx = requireAdmin(await guard(form));
+    const db = getPrisma();
+    const hide = str(form, "action") !== "show";
+    const account = await findAccountByUsername(db, str(form, "username").trim());
+    if (!account) throw new AppError("NOT_FOUND", "That player has never joined the server");
+    const r = await setLeaderboardHidden(db, { mcAccountId: account.id, hidden: hide }, actorOf(ctx));
+    message = r.changed ? `${r.username} is now ${hide ? "disqualified and hidden from" : "allowed back on"} the leaderboard` : `${r.username} was already ${hide ? "disqualified" : "on the leaderboard"}`;
+    revalidatePath("/");
+  } catch (e) { return fail("/admin", e); }
+  redirect(`/admin?ok=${encodeURIComponent(message)}`);
 }

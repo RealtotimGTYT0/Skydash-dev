@@ -3,6 +3,7 @@ const nextConfig = {
   // Native / Node-only packages must not be bundled.
   serverExternalPackages: ["@node-rs/argon2", "pg", "@prisma/client", "@prisma/adapter-pg"],
   poweredByHeader: false,
+  experimental: { serverActions: { bodySizeLimit: "3mb" } },
   async headers() {
     return [{
       source: "/(.*)",

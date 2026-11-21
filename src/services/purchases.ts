@@ -26,6 +26,7 @@ interface ClaimedProduct {
   name: string;
   price: number;
   commands: string[];
+  rankName: string | null;
 }
 
 /**
@@ -69,6 +70,18 @@ export async function createPurchase(db: Db, req: PurchaseRequest): Promise<Purc
         }
       }
 
+      // A rank item: refuse if the player already has the rank (before charging), otherwise record it with the purchase.
+      let rankCommands: string[] = [];
+      let rankId: string | null = null;
+      if (product.rankName) {
+        const rank = await tx.rank.findUnique({ where: { name: product.rankName } });
+        if (!rank) throw new AppError("PRODUCT_UNAVAILABLE", "This product is not available");
+        const has = await tx.accountRank.findUnique({ where: { mcAccountId_rankId: { mcAccountId: req.mcAccountId, rankId: rank.id } } });
+        if (has) throw new AppError("LIMIT_REACHED", "You already have this rank");
+        rankCommands = rank.grantCommands;
+        rankId = rank.id;
+      }
+
       const purchase = await tx.purchase.create({
         data: {
           mcAccountId: req.mcAccountId,
@@ -95,8 +108,11 @@ export async function createPurchase(db: Db, req: PurchaseRequest): Promise<Purc
         balance,
       );
 
+      if (rankId) {
+        await tx.accountRank.create({ data: { mcAccountId: req.mcAccountId, rankId, grantedBy: `shop:${purchase.id}` } });
+      }
       const reward = await tx.rewardQueue.create({
-        data: { purchaseId: purchase.id, mcAccountId: req.mcAccountId, commands: product.commands },
+        data: { purchaseId: purchase.id, mcAccountId: req.mcAccountId, commands: [...product.commands, ...rankCommands] },
       });
       return { purchase, reward, replayed: false, balance: debit.balance };
     });
@@ -121,19 +137,19 @@ async function reserveProduct(tx: Tx, productId: string): Promise<ClaimedProduct
      WHERE p.id = ${productId}::uuid
        AND p.deleted_at IS NULL
        AND p.enabled
-       AND cardinality(p.commands) > 0
+       AND (cardinality(p.commands) > 0 OR p.rank_name IS NOT NULL)
        AND EXISTS (SELECT 1 FROM categories c WHERE c.id = p.category_id AND c.enabled)
        AND (p.stock_limit IS NULL OR p.stock_sold < p.stock_limit)
-    RETURNING p.id, p.name, p.price, p.commands`;
+    RETURNING p.id, p.name, p.price, p.commands, p.rank_name AS "rankName"`;
   const row = rows[0];
   if (row) return row;
 
   // Work out why, for a useful message.
   const p = await tx.product.findUnique({
     where: { id: productId },
-    select: { deletedAt: true, enabled: true, stockLimit: true, stockSold: true, commands: true, category: { select: { enabled: true } } },
+    select: { deletedAt: true, enabled: true, stockLimit: true, stockSold: true, commands: true, rankName: true, category: { select: { enabled: true } } },
   });
-  if (!p || p.deletedAt || !p.enabled || !p.category.enabled || p.commands.length === 0) {
+  if (!p || p.deletedAt || !p.enabled || !p.category.enabled || (p.commands.length === 0 && !p.rankName)) {
     throw new AppError("PRODUCT_UNAVAILABLE", "This product is not available");
   }
   throw new AppError("OUT_OF_STOCK", "This product is out of stock");
@@ -194,6 +210,8 @@ export async function cancelPurchase(
       },
       balance,
     );
+    // A cancelled rank purchase takes the rank record back (only the one this purchase created).
+    await tx.accountRank.deleteMany({ where: { mcAccountId: fresh.mcAccountId, grantedBy: `shop:${fresh.id}` } });
     if (fresh.productId) {
       await tx.$executeRaw`UPDATE products SET stock_sold = GREATEST(stock_sold - 1, 0), updated_at = now() WHERE id = ${fresh.productId}::uuid`;
     }

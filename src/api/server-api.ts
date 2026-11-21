@@ -10,6 +10,7 @@ import { adminAdjustTokens } from "../services/admin-tokens.ts";
 import { confirmInGame } from "../services/linking.ts";
 import { recordPlaytime } from "../services/playtime.ts";
 import { getVoteConfig, listVoteSites, recordVote } from "../services/votes.ts";
+import { listLeaderboardHidden, setLeaderboardHidden } from "../services/leaderboard-admin.ts";
 import { getAppearance } from "../services/appearance.ts";
 import { addRankCommand, createRank, deleteRank, grantRank, listRanks, ranksOf, revokeRank, setRankCommands, updateRank } from "../services/ranks.ts";
 import { listWebAdmins, setWebAdmin } from "../services/web-admins.ts";
@@ -93,6 +94,11 @@ const schemas = {
     priority: z.number().int().optional(),
     kind: z.enum(["grant", "revoke"]).optional(),
     commands: z.array(z.string().max(300)).max(20).optional(),
+    username: mcName.optional(),
+    actorName: z.string().min(1).max(32),
+  }),
+  lbadmin: z.object({
+    action: z.enum(["hide", "show", "list"]),
     username: mcName.optional(),
     actorName: z.string().min(1).max(32),
   }),
@@ -254,6 +260,14 @@ const handlers: { [R in Route]: (c: Ctx, body: z.output<(typeof schemas)[R]>) =>
         return { username: account.username, mcUuid: account.mcUuid, had: r.had, commands: subst(r.commands, account.username, account.mcUuid) };
       }
     }
+  },
+
+  async lbadmin(c, b) {
+    if (b.action === "list") return { players: await listLeaderboardHidden(c.db) };
+    if (!b.username) throw new AppError("VALIDATION", "Missing player name");
+    const account = await findAccountByUsername(c.db, b.username);
+    if (!account) throw new AppError("NOT_FOUND", "That player has never joined the server");
+    return setLeaderboardHidden(c.db, { mcAccountId: account.id, hidden: b.action === "hide" }, { actorLabel: `in-game:${b.actorName}`.slice(0, 64) });
   },
 
   async webadmin(c, b) {

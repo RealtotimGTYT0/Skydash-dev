@@ -6,6 +6,7 @@ import { catalog } from "../../services/queries.ts";
 import { getBalance } from "../../services/tokens.ts";
 import { buyAction } from "../actions.ts";
 import { Notice } from "../Notice.tsx";
+import { Rich } from "../Rich.tsx";
 
 export default async function Shop({ searchParams }: { searchParams: Promise<{ e?: string; ok?: string }> }) {
   const { e, ok } = await searchParams;
@@ -27,11 +28,15 @@ export default async function Shop({ searchParams }: { searchParams: Promise<{ e
       {categories.length === 0 && <p className="text-zinc-400">The shop is empty right now.</p>}
       {categories.map((c) => (
         <section key={c.id} className="space-y-3">
-          <h2 className="font-semibold text-zinc-300">{c.name}</h2>
+          <h2 className="font-semibold text-zinc-300"><Rich text={c.name} /></h2>
           <div className="grid gap-3 sm:grid-cols-2">
             {c.products.map((p) => (
               <div key={p.id} className="card flex flex-col justify-between gap-3">
-                <div><h3 className="font-semibold">{p.name}</h3><p className="text-sm text-zinc-400">{p.description}</p>
+                <div>
+                  {p.imageUrl && /* eslint-disable-next-line @next/next/no-img-element */ <img src={p.imageUrl} alt="" loading="lazy" referrerPolicy="no-referrer" className="mb-3 h-36 w-full rounded-lg object-cover" />}
+                  <h3 className="font-semibold"><Rich text={p.name} /></h3><p className="text-sm text-zinc-400"><Rich text={p.description} /></p>
+                  {p.lore.length > 0 && <p className="mt-1 text-xs text-zinc-500"><Rich text={p.lore.join("\n")} /></p>}
+                  {p.rankName && <p className="mt-1 text-xs text-amber-400">Gives you the <b>{p.rankName}</b> rank</p>}
                   {p.stockRemaining !== null && <p className="mt-1 text-xs text-zinc-500">{p.stockRemaining} left</p>}</div>
                 <div className="flex items-center justify-between"><span className="font-bold text-amber-400">{p.price} tokens</span>
                   {balance !== null && (

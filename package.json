@@ -13,7 +13,8 @@
     "admin:promote": "tsx scripts/promote-admin.ts",
     "dev": "next dev",
     "build": "prisma generate && next build",
-    "start": "next start"
+    "start": "next start",
+    "prebuild": "node scripts/check-files.mjs"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",

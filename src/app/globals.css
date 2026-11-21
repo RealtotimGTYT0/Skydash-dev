@@ -1,8 +1,46 @@
 @import "tailwindcss";
-body { @apply bg-zinc-950 text-zinc-100 antialiased; }
+
+/* Every grey/amber colour the pages use is read from these variables, so a theme is just a set of values. */
+@theme inline {
+  --color-zinc-950: var(--z950); --color-zinc-900: var(--z900); --color-zinc-800: var(--z800); --color-zinc-700: var(--z700);
+  --color-zinc-500: var(--z500); --color-zinc-400: var(--z400); --color-zinc-300: var(--z300); --color-zinc-100: var(--z100);
+  --color-amber-300: var(--a300); --color-amber-400: var(--a400); --color-amber-500: var(--a500);
+}
+
+:root, [data-theme="dark"] { --z950:#09090b; --z900:#18181b; --z800:#27272a; --z700:#3f3f46; --z500:#71717a; --z400:#a1a1aa; --z300:#d4d4d8; --z100:#f4f4f5; --a300:#fcd34d; --a400:#fbbf24; --a500:#f59e0b; }
+[data-theme="light"] { --z950:#fafafa; --z900:#ffffff; --z800:#e4e4e7; --z700:#d4d4d8; --z500:#71717a; --z400:#52525b; --z300:#3f3f46; --z100:#18181b; --a300:#92400e; --a400:#b45309; --a500:#d97706; }
+[data-theme="midnight"] { --z950:#0b1020; --z900:#131a33; --z800:#1e2748; --z700:#2c3a6b; --z500:#7480a8; --z400:#9aa5cc; --z300:#c3cbe6; --z100:#eef1ff; --a300:#c4b5fd; --a400:#a78bfa; --a500:#8b5cf6; }
+[data-theme="ocean"] { --z950:#06161d; --z900:#0b2530; --z800:#123646; --z700:#1d516a; --z500:#6a9db3; --z400:#8dbdd0; --z300:#b9dbe8; --z100:#eaf8ff; --a300:#67e8f9; --a400:#22d3ee; --a500:#06b6d4; }
+[data-theme="forest"] { --z950:#0a140d; --z900:#112016; --z800:#1b3324; --z700:#2a4d38; --z500:#7fa58a; --z400:#9bc2a6; --z300:#c4e0cb; --z100:#effaf1; --a300:#bef264; --a400:#a3e635; --a500:#84cc16; }
+[data-theme="sunset"] { --z950:#1a0d12; --z900:#29121b; --z800:#3d1b28; --z700:#5e2a3c; --z500:#b0808f; --z400:#cc9aa9; --z300:#e8c4cf; --z100:#fff0f3; --a300:#fdba74; --a400:#fb923c; --a500:#f97316; }
+
+/* ---- Animated themes (admins only; the server decides who may use them) ---- */
+[data-theme="aurora"] { --z950:#050b14; --z900:#0b1626; --z800:#122338; --z700:#1d3a57; --z500:#6f93b3; --z400:#93b4cf; --z300:#c0d6e8; --z100:#eef8ff; --a300:#99f6e4; --a400:#5eead4; --a500:#2dd4bf; }
+[data-theme="starfield"] { --z950:#02030a; --z900:#0a0d1c; --z800:#141a33; --z700:#252d52; --z500:#7a84b5; --z400:#9aa3cf; --z300:#c6cbe8; --z100:#f3f4ff; --a300:#fde68a; --a400:#facc15; --a500:#eab308; }
+@property --neon-h { syntax: "<number>"; inherits: true; initial-value: 280; }
+[data-theme="neon"] { --z950:#0a0612; --z900:#140b24; --z800:#1f1238; --z700:#33205c; --z500:#8a75b8; --z400:#a995d3; --z300:#cdbfe8; --z100:#f6f0ff;
+  --a300: hsl(calc(var(--neon-h) * 1deg) 100% 75%); --a400: hsl(calc(var(--neon-h) * 1deg) 100% 62%); --a500: hsl(calc(var(--neon-h) * 1deg) 100% 55%);
+  animation: neon-hue 12s linear infinite; }
+@keyframes neon-hue { from { --neon-h: 0; } to { --neon-h: 360; } }
+
+body { @apply bg-zinc-950 text-zinc-100 antialiased; min-height: 100vh; position: relative; }
+body.has-bg { background-image: linear-gradient(color-mix(in srgb, var(--z950) 84%, transparent), color-mix(in srgb, var(--z950) 84%, transparent)), var(--bg-image); background-size: cover; background-attachment: fixed; background-position: center; }
+
+[data-theme="aurora"] body::before, [data-theme="starfield"] body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+[data-theme="aurora"] body::before {
+  background: radial-gradient(60% 50% at 20% 20%, rgba(45,212,191,.35), transparent 70%), radial-gradient(50% 45% at 80% 30%, rgba(129,140,248,.30), transparent 70%), radial-gradient(60% 50% at 50% 90%, rgba(52,211,153,.25), transparent 70%);
+  background-size: 160% 160%; animation: aurora-move 18s ease-in-out infinite alternate; }
+@keyframes aurora-move { from { background-position: 0% 0%; filter: hue-rotate(0deg); } to { background-position: 100% 100%; filter: hue-rotate(60deg); } }
+[data-theme="starfield"] body::before {
+  background-image: radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent), radial-gradient(1px 1px at 90px 120px, #fff, transparent), radial-gradient(1.5px 1.5px at 160px 60px, #ffe9a8, transparent), radial-gradient(1px 1px at 230px 170px, #cfe0ff, transparent), radial-gradient(1px 1px at 300px 90px, #fff, transparent);
+  background-size: 340px 220px; animation: twinkle 4s ease-in-out infinite alternate; opacity: .8; }
+@keyframes twinkle { from { opacity: .35; background-position: 0 0; } to { opacity: 1; background-position: 40px 30px; } }
+@media (prefers-reduced-motion: reduce) { [data-theme="neon"], [data-theme="aurora"] body::before, [data-theme="starfield"] body::before { animation: none !important; } }
+
 a { @apply text-amber-400 hover:text-amber-300; }
 .card { @apply rounded-xl border border-zinc-800 bg-zinc-900 p-5; }
 .input { @apply w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500; }
 .btn { @apply rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-zinc-950 hover:bg-amber-400 disabled:opacity-50; }
 .btn-ghost { @apply rounded-lg border border-zinc-700 px-4 py-2 text-sm hover:bg-zinc-800; }
+.btn-danger { @apply rounded-lg border border-red-800 px-4 py-2 text-sm text-red-300 hover:bg-red-950; }
 .label { @apply mb-1 block text-xs uppercase tracking-wide text-zinc-400; }
