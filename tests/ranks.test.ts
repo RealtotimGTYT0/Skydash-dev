@@ -4,7 +4,7 @@ import { createTestDb, makeAccount, type TestDb } from "./helpers/db.ts";
 import { makeLinkedUser } from "./helpers/users.ts";
 import { handleServerApi } from "../src/api/server-api.ts";
 import { sign } from "../src/lib/server-auth.ts";
-import { createRank, deleteRank, grantRank, listRanks, ranksOf, revokeRank, setRankCommands } from "../src/services/ranks.ts";
+import { createRank, deleteRank, grantRank, listRanks, ranksOf, revokeRank, setRankCommands, updateRank } from "../src/services/ranks.ts";
 import { setWebAdmin } from "../src/services/web-admins.ts";
 
 let t: TestDb;
@@ -26,7 +26,7 @@ describe("ranks", () => {
     expect(g1).toMatchObject({ already: false, commands: ["lp user {player} parent add vip"] });
     const g2 = await grantRank(t.prisma, { name: "vip", mcAccountId: a.id }, actor);
     expect(g2).toMatchObject({ already: true, commands: [] });   // never run the grant commands twice
-    expect(await ranksOf(t.prisma, a.id)).toEqual([{ name: "vip", displayName: "<gold>VIP</gold>", priority: 5 }]);
+    expect(await ranksOf(t.prisma, a.id)).toEqual([{ name: "vip", displayName: "<gold>VIP</gold>", priority: 5, animated: false }]);
 
     const r1 = await revokeRank(t.prisma, { name: "vip", mcAccountId: a.id }, actor);
     expect(r1).toMatchObject({ had: true, commands: ["lp user {player} parent remove vip"] });
@@ -34,7 +34,7 @@ describe("ranks", () => {
 
     await grantRank(t.prisma, { name: "vip", mcAccountId: a.id }, actor);
     expect(await deleteRank(t.prisma, "vip", actor)).toEqual({ holders: 1 });
-    expect(await listRanks(t.prisma)).toEqual([]);
+    expect((await listRanks(t.prisma)).map((r) => r.name)).not.toContain("vip");
     expect(await ranksOf(t.prisma, a.id)).toEqual([]);
     await expect(grantRank(t.prisma, { name: "vip", mcAccountId: a.id }, actor)).rejects.toMatchObject({ code: "NOT_FOUND" });
   });
@@ -103,5 +103,44 @@ describe("rank + webadmin plugin API", () => {
     expect(r).toMatchObject({ status: 200, data: { changed: true } });
     expect((await call("webadmin", { action: "list", actorName: "Boss" })).data.admins).toContain(u.username);
     expect((await call("webadmin", { action: "add", username: "NoSuch_1", actorName: "Boss" })).status).toBe(404);
+  });
+});
+
+describe("the staff ladder that every install starts with", () => {
+  it("has the 12 staff ranks, highest first, with no commands yet", async () => {
+    const ranks = await listRanks(t.prisma);
+    const staff = ["realtotim", "founder", "owner", "dev", "head-admin", "admin", "head-staff", "staff", "head-mod", "mod", "head-helper", "helper"];
+    expect(ranks.map((r) => r.name).filter((n) => staff.includes(n))).toEqual(staff);
+    for (const r of ranks.filter((x) => staff.includes(x.name))) {
+      expect(r.grantCommands).toEqual([]);
+      expect(r.displayName.length).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe("LuckPerms link and animated ranks", () => {
+  it("giving/removing a linked rank adds the lp command (with {uuid}); unlinking removes it; bad group names are refused", async () => {
+    await createRank(t.prisma, { name: "lpvip", displayName: "<gradient:#ff0000:#0000ff>VIP</gradient>", animated: true, lpGroup: "vip" }, actor);
+    const a = await makeAccount(t.prisma, { username: "LpUser" });
+    const g = await grantRank(t.prisma, { name: "lpvip", mcAccountId: a.id }, actor);
+    expect(g.commands).toEqual(["lp user {uuid} parent add vip"]);
+    expect((await ranksOf(t.prisma, a.id))[0]).toMatchObject({ name: "lpvip", animated: true });
+    expect((await grantRank(t.prisma, { name: "lpvip", mcAccountId: a.id }, actor)).commands).toEqual([]);   // already has it
+
+    await setRankCommands(t.prisma, { name: "lpvip", kind: "grant", commands: ["broadcast {player} ranked up"] }, actor);
+    await updateRank(t.prisma, { name: "lpvip", lpGroup: "vip-plus", animated: false }, actor);
+    const r = await revokeRank(t.prisma, { name: "lpvip", mcAccountId: a.id }, actor);
+    expect(r.commands).toEqual(["lp user {uuid} parent remove vip-plus"]);
+
+    await expect(updateRank(t.prisma, { name: "lpvip", lpGroup: "vip; op me" }, actor)).rejects.toMatchObject({ code: "VALIDATION" });
+    await updateRank(t.prisma, { name: "lpvip", lpGroup: "none" }, actor);
+    expect((await grantRank(t.prisma, { name: "lpvip", mcAccountId: a.id }, actor)).commands).toEqual(["broadcast {player} ranked up"]);
+  });
+
+  it("the staff ladder is linked to same-named LuckPerms groups; founder and realtotim are animated", async () => {
+    const ranks = await listRanks(t.prisma);
+    for (const n of ["helper", "head-mod", "owner", "realtotim"]) expect(ranks.find((x) => x.name === n)?.lpGroup).toBe(n);
+    expect(ranks.filter((x) => x.animated).map((x) => x.name).sort()).toContain("founder");
+    expect(ranks.find((x) => x.name === "mod")?.animated).toBe(false);
   });
 });

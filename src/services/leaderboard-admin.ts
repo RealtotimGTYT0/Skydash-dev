@@ -3,20 +3,20 @@ import { writeAudit } from "../lib/audit.ts";
 import { AppError } from "../lib/errors.ts";
 
 type Actor = { actorUserId?: string | null; actorLabel?: string | null };
+export type LbAction = "hide" | "unhide" | "ban" | "unban";
 
-/** Disqualifies (hidden = true) or re-qualifies a player on the leaderboard. Their tokens are not touched. */
-export async function setLeaderboardHidden(db: Db, p: { mcAccountId: string; hidden: boolean }, actor: Actor) {
+/** Hide a player from the leaderboards, or ban them from it (cheaters). Does not touch their tokens. */
+export async function setLeaderboardFlag(db: Db, p: { mcAccountId: string; action: LbAction }, actor: Actor) {
   return db.$transaction(async (tx) => {
-    const a = await tx.minecraftAccount.findUnique({ where: { id: p.mcAccountId } });
+    const a = await tx.minecraftAccount.findUnique({ where: { id: p.mcAccountId }, select: { id: true, username: true, lbHidden: true, lbBanned: true } });
     if (!a) throw new AppError("NOT_FOUND", "Unknown player");
-    if (a.leaderboardHidden === p.hidden) return { changed: false, username: a.username };
-    await tx.minecraftAccount.update({ where: { id: a.id }, data: { leaderboardHidden: p.hidden } });
-    await writeAudit(tx, { ...actor, action: p.hidden ? "leaderboard.disqualify" : "leaderboard.requalify", targetType: "account", targetId: a.id, details: { username: a.username } });
-    return { changed: true, username: a.username };
+    const data = p.action === "hide" ? { lbHidden: true } : p.action === "unhide" ? { lbHidden: false } : p.action === "ban" ? { lbBanned: true } : { lbBanned: false };
+    const changed = (data.lbHidden !== undefined && data.lbHidden !== a.lbHidden) || (data.lbBanned !== undefined && data.lbBanned !== a.lbBanned);
+    if (changed) {
+      await tx.minecraftAccount.update({ where: { id: a.id }, data });
+      await writeAudit(tx, { ...actor, action: `leaderboard.${p.action}`, targetType: "minecraft_account", targetId: a.id, details: { username: a.username } });
+    }
+    const now = { ...{ lbHidden: a.lbHidden, lbBanned: a.lbBanned }, ...data };
+    return { changed, username: a.username, hidden: now.lbHidden, banned: now.lbBanned };
   });
-}
-
-export async function listLeaderboardHidden(db: Db): Promise<string[]> {
-  const rows = await db.minecraftAccount.findMany({ where: { leaderboardHidden: true }, select: { username: true }, orderBy: { username: "asc" } });
-  return rows.map((r) => r.username);
 }

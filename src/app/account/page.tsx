@@ -18,7 +18,7 @@ export default async function Account() {
   const h = Math.floor(acct.playtimeTotalSeconds / 3600), m = Math.floor((acct.playtimeTotalSeconds % 3600) / 60);
   return (
     <div className="space-y-6">
-      {myRanks.length > 0 && <p className="text-sm text-zinc-400">Your ranks: {myRanks.map((r) => <span key={r.name} className="mr-2"><Rich text={r.displayName} /></span>)}</p>}
+      {myRanks.length > 0 && <p className="text-sm text-zinc-400">Your ranks: {myRanks.map((r) => <span key={r.name} className="mr-2"><Rich text={r.displayName} animated={r.animated} /></span>)}</p>}
       <section className="card flex items-end justify-between">
         <div><p className="label">Balance</p><p className="text-4xl font-bold text-amber-400">{balance}</p></div>
         <div className="text-right text-sm text-zinc-400">Playtime counted<br /><b className="text-zinc-100">{h}h {m}m</b></div>

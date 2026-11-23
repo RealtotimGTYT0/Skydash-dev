@@ -13,18 +13,33 @@ export async function findAccountByUsername(db: DbOrTx, username: string): Promi
   });
 }
 
-export interface LeaderboardRow { rank: number; username: string; balance: number }
+export interface LeaderboardRow { rank: number; username: string; balance: number; hidden: boolean; banned: boolean }
 
-export async function leaderboard(db: DbOrTx, limit: number): Promise<LeaderboardRow[]> {
+export interface LeaderboardOptions {
+  /** Include players an admin hid (default no). */
+  showHidden?: boolean;
+  /** Include players banned from the leaderboard; they are returned with banned = true (default no). */
+  showBanned?: boolean;
+  /** Include players that are BOTH hidden and banned (default no). */
+  showHiddenBanned?: boolean;
+}
+
+export async function leaderboard(db: DbOrTx, limit: number, opts: LeaderboardOptions = {}): Promise<LeaderboardRow[]> {
   const n = Math.min(Math.max(Math.trunc(limit), 1), 50);
-  const rows = await db.$queryRaw<{ username: string; balance: number }[]>`
-    SELECT a.username, b.balance
+  const showHidden = opts.showHidden === true, showBanned = opts.showBanned === true, showHB = opts.showHiddenBanned === true;
+  // Plain players always count. Hidden-only, banned-only and hidden+banned players each need their own switch.
+  const rows = await db.$queryRaw<{ username: string; balance: number; hidden: boolean; banned: boolean }[]>`
+    SELECT a.username, b.balance, a.lb_hidden AS hidden, a.lb_banned AS banned
       FROM token_balances b
       JOIN minecraft_accounts a ON a.id = b.mc_account_id
-     WHERE b.balance > 0 AND NOT a.leaderboard_hidden
+     WHERE b.balance > 0
+       AND ( (NOT a.lb_hidden AND NOT a.lb_banned)
+          OR (a.lb_hidden AND NOT a.lb_banned AND ${showHidden})
+          OR (NOT a.lb_hidden AND a.lb_banned AND ${showBanned})
+          OR (a.lb_hidden AND a.lb_banned AND ${showHB}) )
      ORDER BY b.balance DESC, a.username ASC
      LIMIT ${n}`;
-  return rows.map((r, i) => ({ rank: i + 1, username: r.username, balance: r.balance }));
+  return rows.map((r, i) => ({ rank: i + 1, username: r.username, balance: r.balance, hidden: r.hidden, banned: r.banned }));
 }
 
 export interface HistoryRow { amount: number; balanceAfter: number; type: TxType; reason: string | null; createdAt: Date }

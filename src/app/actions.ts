@@ -15,9 +15,8 @@ import { findAccountByUsername } from "../services/queries.ts";
 import { revalidatePath } from "next/cache";
 import { ALL_THEMES, isAnimated, setAppearance } from "../services/appearance.ts";
 import { deleteCategory, deleteProduct, saveCategory, saveProduct } from "../services/catalog-admin.ts";
+import { createRank, deleteRank, updateRank } from "../services/ranks.ts";
 import { saveImage } from "../services/images.ts";
-import { setLeaderboardHidden } from "../services/leaderboard-admin.ts";
-import { createRank, setRankCommands, updateRank } from "../services/ranks.ts";
 import { parseVoteSites, replaceVoteSites, setVoteConfig } from "../services/votes.ts";
 import { clearSessionCookies, clientContext, currentAuth, FLASH_COOKIE, guard, safeMessage, setSessionCookies } from "../web/session.ts";
 
@@ -203,8 +202,7 @@ export async function saveAppearanceAction(form: FormData) {
   let msg = "";
   try {
     const ctx = requireAdmin(await guard(form));
-    await setAppearance(getPrisma(), { siteName: str(form, "siteName"), logoUrl: await pictureFrom(form, "logoFile", "logoUrl", ctx), backgroundUrl: await pictureFrom(form, "backgroundFile", "backgroundUrl", ctx), defaultTheme: str(form, "defaultTheme"),
-      faviconUrl: await pictureFrom(form, "faviconFile", "faviconUrl", ctx), discordUrl: str(form, "discordUrl") }, actorOf(ctx));
+    await setAppearance(getPrisma(), { siteName: str(form, "siteName"), logoUrl: await pictureFrom(form, "logoFile", "logoUrl", ctx), backgroundUrl: await pictureFrom(form, "backgroundFile", "backgroundUrl", ctx), defaultTheme: str(form, "defaultTheme") }, actorOf(ctx));
     revalidatePath("/", "layout");
     msg = "Appearance saved";
   } catch (e) { return back("/admin/appearance", { e: safeMessage(e) }); }
@@ -215,30 +213,24 @@ export async function saveRankAction(form: FormData) {
   let msg = "";
   try {
     const ctx = requireAdmin(await guard(form));
+    const name = str(form, "name").toLowerCase();
+    const priority = Number.parseInt(str(form, "priority") || "0", 10);
+    if (!Number.isInteger(priority)) throw new Error("Priority must be a whole number");
+    const data = { name, displayName: str(form, "displayName") || name, priority, animated: form.get("animated") === "on", lpGroup: str(form, "lpGroup") };
     const db = getPrisma();
-    const name = str(form, "name");
-    const priority = Number(str(form, "priority") || "0");
-    if (form.get("isNew") === "1") await createRank(db, { name, displayName: str(form, "displayName") || undefined, priority }, actorOf(ctx));
-    else await updateRank(db, { name, displayName: str(form, "displayName"), priority }, actorOf(ctx));
-    // One command per line: a rank can run as many as you like (up to 20) when it is given or removed.
-    await setRankCommands(db, { name, kind: "grant", commands: str(form, "grantCommands").split(/\r?\n/) }, actorOf(ctx));
-    await setRankCommands(db, { name, kind: "revoke", commands: str(form, "revokeCommands").split(/\r?\n/) }, actorOf(ctx));
-    msg = `Rank ${name.trim().toLowerCase()} saved`;
+    if (form.get("isNew") === "1") { await createRank(db, data, actorOf(ctx)); msg = `Rank ${name} created`; }
+    else { await updateRank(db, data, actorOf(ctx)); msg = `Rank ${name} saved`; }
   } catch (e) { return back("/admin/ranks", { e: safeMessage(e) }); }
   back("/admin/ranks", { ok: msg });
 }
 
-export async function adminLeaderboardAction(form: FormData) {
-  let message = "";
+export async function deleteRankAction(form: FormData) {
+  let msg = "";
   try {
     const ctx = requireAdmin(await guard(form));
-    const db = getPrisma();
-    const hide = str(form, "action") !== "show";
-    const account = await findAccountByUsername(db, str(form, "username").trim());
-    if (!account) throw new AppError("NOT_FOUND", "That player has never joined the server");
-    const r = await setLeaderboardHidden(db, { mcAccountId: account.id, hidden: hide }, actorOf(ctx));
-    message = r.changed ? `${r.username} is now ${hide ? "disqualified and hidden from" : "allowed back on"} the leaderboard` : `${r.username} was already ${hide ? "disqualified" : "on the leaderboard"}`;
-    revalidatePath("/");
-  } catch (e) { return fail("/admin", e); }
-  redirect(`/admin?ok=${encodeURIComponent(message)}`);
+    const name = str(form, "name");
+    const r = await deleteRank(getPrisma(), name, actorOf(ctx));
+    msg = `Rank ${name} deleted` + (r.holders ? ` (${r.holders} player(s) had it; their in-game permissions are not changed)` : "");
+  } catch (e) { return back("/admin/ranks", { e: safeMessage(e) }); }
+  back("/admin/ranks", { ok: msg });
 }

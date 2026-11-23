@@ -1,4 +1,5 @@
 import type { Db } from "../lib/db.ts";
+import { grantCommandsOf } from "./ranks.ts";
 import { writeAudit } from "../lib/audit.ts";
 import { AppError } from "../lib/errors.ts";
 import { parseCommandLines, parseImageRef, parseLines } from "../lib/commands.ts";
@@ -109,7 +110,7 @@ export async function saveProduct(db: Db, input: ProductInput, actor: Actor) {
   if (rankName) {
     const rank = await db.rank.findUnique({ where: { name: rankName } });
     if (!rank) throw new AppError("VALIDATION", `There is no rank called "${rankName}". Create it first (Admin > Ranks or /tokens admin rank create)`);
-    rankCommands = rank.grantCommands.length;
+    rankCommands = grantCommandsOf(rank).length;
   }
   if (enabled && commands.length + rankCommands === 0) throw new AppError("VALIDATION", "An item needs at least one command to be for sale (what should the server do when it is bought? A rank item can use the rank's own grant command)");
 

@@ -135,8 +135,9 @@ model MinecraftAccount {
   playtimeCarrySeconds Int          @default(0) @map("playtime_carry_seconds")
   firstSeenAt          DateTime     @default(now()) @map("first_seen_at") @db.Timestamptz(3)
   lastSeenAt           DateTime     @default(now()) @map("last_seen_at") @db.Timestamptz(3)
-  // Disqualified players never show on the leaderboard (they still earn and spend tokens normally).
-  leaderboardHidden    Boolean      @default(false) @map("leaderboard_hidden")
+  // Leaderboard moderation: hidden = left off lists unless asked for; banned = cheater/abuse, shown only if asked for (and marked).
+  lbHidden             Boolean      @default(false) @map("lb_hidden")
+  lbBanned             Boolean      @default(false) @map("lb_banned")
 
   user            User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
   balance         TokenBalance?
@@ -455,6 +456,10 @@ model Rank {
   displayName    String   @map("display_name") @db.VarChar(120)
   // Higher = shown first when a player has several ranks.
   priority       Int      @default(0)
+  // true = the colours move (website: slow colour cycle; in game: the %tokenstore_rank_colored% placeholder changes every moment).
+  animated       Boolean  @default(false)
+  // LuckPerms group linked to this rank. Giving/removing the rank also runs "lp user {uuid} parent add|remove <group>".
+  lpGroup        String?  @map("lp_group") @db.VarChar(64)
   grantCommands  String[] @map("grant_commands")
   revokeCommands String[] @map("revoke_commands")
   createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)

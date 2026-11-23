@@ -2,7 +2,7 @@ import type { Db } from "../lib/db.ts";
 import { AppError } from "../lib/errors.ts";
 import type { MinecraftAccount } from "../generated/prisma/client.ts";
 
-const MC_USERNAME = /^[A-Za-z0-9_.+]{3,16}$/;
+const MC_USERNAME = /^[A-Za-z0-9_]{3,16}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export function isValidMcUsername(name: string): boolean {

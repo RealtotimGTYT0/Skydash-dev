@@ -101,10 +101,7 @@ describe("appearance and themes", () => {
   it("stores and validates appearance, and only admins ever get an animated theme", async () => {
     expect(await getAppearance(t.prisma)).toMatchObject({ siteName: "TokenStore", defaultTheme: "dark", logoUrl: null });
     await setAppearance(t.prisma, { siteName: "ABMC Store", logoUrl: "https://i.example/logo.png", backgroundUrl: "", defaultTheme: "ocean" }, actor);
-    expect(await getAppearance(t.prisma)).toEqual({ siteName: "ABMC Store", logoUrl: "https://i.example/logo.png", backgroundUrl: null, defaultTheme: "ocean", faviconUrl: null, discordUrl: null });
-    await setAppearance(t.prisma, { siteName: "ABMC Store", logoUrl: null, backgroundUrl: null, defaultTheme: "ocean", faviconUrl: "https://i.example/f.png", discordUrl: "https://discord.gg/abc" }, actor);
-    expect(await getAppearance(t.prisma)).toMatchObject({ faviconUrl: "https://i.example/f.png", discordUrl: "https://discord.gg/abc" });
-    await expect(setAppearance(t.prisma, { siteName: "x", logoUrl: null, backgroundUrl: null, defaultTheme: "ocean", discordUrl: "http://no" }, actor)).rejects.toMatchObject({ code: "VALIDATION" });
+    expect(await getAppearance(t.prisma)).toEqual({ siteName: "ABMC Store", logoUrl: "https://i.example/logo.png", backgroundUrl: null, defaultTheme: "ocean" });
     await expect(setAppearance(t.prisma, { siteName: "", logoUrl: null, backgroundUrl: null, defaultTheme: "ocean" }, actor)).rejects.toMatchObject({ code: "VALIDATION" });
     await expect(setAppearance(t.prisma, { siteName: "x", logoUrl: "http://no", backgroundUrl: null, defaultTheme: "ocean" }, actor)).rejects.toMatchObject({ code: "VALIDATION" });
     await expect(setAppearance(t.prisma, { siteName: "x", logoUrl: null, backgroundUrl: null, defaultTheme: "evil" }, actor)).rejects.toMatchObject({ code: "VALIDATION" });

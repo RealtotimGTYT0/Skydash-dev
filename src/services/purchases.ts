@@ -1,4 +1,5 @@
 import type { Db, Tx } from "../lib/db.ts";
+import { grantCommandsOf } from "./ranks.ts";
 import { isUniqueViolation } from "../lib/db.ts";
 import { AppError } from "../lib/errors.ts";
 import { applyLocked, lockBalance } from "./tokens.ts";
@@ -78,7 +79,7 @@ export async function createPurchase(db: Db, req: PurchaseRequest): Promise<Purc
         if (!rank) throw new AppError("PRODUCT_UNAVAILABLE", "This product is not available");
         const has = await tx.accountRank.findUnique({ where: { mcAccountId_rankId: { mcAccountId: req.mcAccountId, rankId: rank.id } } });
         if (has) throw new AppError("LIMIT_REACHED", "You already have this rank");
-        rankCommands = rank.grantCommands;
+        rankCommands = grantCommandsOf(rank);
         rankId = rank.id;
       }
 

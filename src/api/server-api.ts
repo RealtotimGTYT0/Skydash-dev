@@ -10,15 +10,14 @@ import { adminAdjustTokens } from "../services/admin-tokens.ts";
 import { confirmInGame } from "../services/linking.ts";
 import { recordPlaytime } from "../services/playtime.ts";
 import { getVoteConfig, listVoteSites, recordVote } from "../services/votes.ts";
-import { listLeaderboardHidden, setLeaderboardHidden } from "../services/leaderboard-admin.ts";
-import { getAppearance } from "../services/appearance.ts";
-import { addRankCommand, createRank, deleteRank, grantRank, listRanks, ranksOf, revokeRank, setRankCommands, updateRank } from "../services/ranks.ts";
+import { createRank, deleteRank, grantRank, listRanks, ranksOf, revokeRank, setRankCommands, updateRank } from "../services/ranks.ts";
 import { listWebAdmins, setWebAdmin } from "../services/web-admins.ts";
 import { createPurchase } from "../services/purchases.ts";
 import { catalog, findAccountByUsername, findAccountByUuid, history, leaderboard } from "../services/queries.ts";
 import { ackReward, claimRewards } from "../services/rewards.ts";
 import { getEarningConfig, resolveEarningRate } from "../services/settings.ts";
 import { getBalance } from "../services/tokens.ts";
+import { setLeaderboardFlag } from "../services/leaderboard-admin.ts";
 import { stripMiniMessage } from "../lib/minimessage.ts";
 
 /**
@@ -40,7 +39,7 @@ const MAX_BODY_BYTES = 256 * 1024;
 const PREFIX = "/api/server/";
 
 const uuidStr = z.string().min(32).max(40);
-const mcName = z.string().regex(/^[A-Za-z0-9_.+]{3,16}$/, "Invalid Minecraft username");
+const mcName = z.string().regex(/^[A-Za-z0-9_]{3,16}$/, "Invalid Minecraft username");
 const idemKey = z.string().min(8).max(128);
 const isoDate = z.string().max(40).refine((s) => !Number.isNaN(Date.parse(s)), "Invalid date").transform((s) => new Date(s));
 const seconds = z.number().int().min(0).max(10 * 24 * 3600);
@@ -75,7 +74,6 @@ const schemas = {
   }),
   vote: z.object({ username: mcName, serviceName: z.string().min(1).max(64), idempotencyKey: idemKey }),
   "vote/info": z.object({}),
-  discord: z.object({}),
   shop: z.object({}),
   purchase: z.object({ mcUuid: uuidStr, productId: z.string().min(32).max(40), idempotencyKey: idemKey }),
   admin: z.object({
@@ -88,23 +86,25 @@ const schemas = {
     actorUuid: uuidStr.optional(),
   }),
   rank: z.object({
-    action: z.enum(["create", "delete", "update", "setcmd", "addcmd", "list", "give", "remove", "info"]),
+    action: z.enum(["create", "delete", "update", "setcmd", "list", "give", "remove", "info"]),
     name: z.string().max(32).optional(),
     displayName: z.string().max(120).optional(),
     priority: z.number().int().optional(),
+    animated: z.boolean().optional(),
+    lpGroup: z.string().max(64).optional(),
     kind: z.enum(["grant", "revoke"]).optional(),
-    commands: z.array(z.string().max(300)).max(20).optional(),
-    username: mcName.optional(),
-    actorName: z.string().min(1).max(32),
-  }),
-  lbadmin: z.object({
-    action: z.enum(["hide", "show", "list"]),
+    commands: z.array(z.string().max(300)).max(10).optional(),
     username: mcName.optional(),
     actorName: z.string().min(1).max(32),
   }),
   webadmin: z.object({
     action: z.enum(["add", "remove", "list"]),
     username: mcName.optional(),
+    actorName: z.string().min(1).max(32),
+  }),
+  lb: z.object({
+    action: z.enum(["hide", "unhide", "ban", "unban"]),
+    username: mcName,
     actorName: z.string().min(1).max(32),
   }),
 } as const;
@@ -131,6 +131,8 @@ const handlers: { [R in Route]: (c: Ctx, body: z.output<(typeof schemas)[R]>) =>
       linked: user?.status === "ACTIVE",
       balance: await getBalance(c.db, account.id),
       rank: topRank ? stripMiniMessage(topRank.displayName) : "",
+      rankDisplay: topRank?.displayName ?? "",
+      rankAnimated: topRank?.animated ?? false,
       rankId: topRank?.name ?? "",
       playtimeTotalSeconds: account.playtimeTotalSeconds,
       playtimeCarrySeconds: account.playtimeCarrySeconds,
@@ -148,10 +150,6 @@ const handlers: { [R in Route]: (c: Ctx, body: z.output<(typeof schemas)[R]>) =>
   async "vote/info"(c) {
     const [cfg, sites] = await Promise.all([getVoteConfig(c.db), listVoteSites(c.db)]);
     return { tokens: cfg.tokens, cooldownHours: cfg.cooldownHours, sites };
-  },
-
-  async discord(c) {
-    return { url: (await getAppearance(c.db)).discordUrl };
   },
 
   async playtime(c, b) {
@@ -237,11 +235,10 @@ const handlers: { [R in Route]: (c: Ctx, body: z.output<(typeof schemas)[R]>) =>
     const subst = (cmds: string[], username: string, mcUuid: string) => cmds.map((x) => x.replaceAll("{player}", username).replaceAll("{uuid}", mcUuid));
     switch (b.action) {
       case "list": return { ranks: await listRanks(c.db) };
-      case "create": { const r = await createRank(c.db, { name: need(b.name, "rank name"), displayName: b.displayName, priority: b.priority }, actor); return { name: r.name, displayName: r.displayName }; }
-      case "update": { const r = await updateRank(c.db, { name: need(b.name, "rank name"), displayName: b.displayName, priority: b.priority }, actor); return { name: r.name, displayName: r.displayName, priority: r.priority }; }
+      case "create": { const r = await createRank(c.db, { name: need(b.name, "rank name"), displayName: b.displayName, priority: b.priority, animated: b.animated, lpGroup: b.lpGroup }, actor); return { name: r.name, displayName: r.displayName }; }
+      case "update": { const r = await updateRank(c.db, { name: need(b.name, "rank name"), displayName: b.displayName, priority: b.priority, animated: b.animated, lpGroup: b.lpGroup }, actor); return { name: r.name, displayName: r.displayName, priority: r.priority, animated: r.animated, lpGroup: r.lpGroup }; }
       case "delete": return deleteRank(c.db, need(b.name, "rank name"), actor);
       case "setcmd": return { commands: await setRankCommands(c.db, { name: need(b.name, "rank name"), kind: b.kind ?? "grant", commands: b.commands ?? [] }, actor) };
-      case "addcmd": return { commands: await addRankCommand(c.db, { name: need(b.name, "rank name"), kind: b.kind ?? "grant", command: need(b.commands?.[0], "command") }, actor) };
       case "info": {
         const account = await findAccountByUsername(c.db, need(b.username, "player name"));
         if (!account) throw new AppError("NOT_FOUND", "That player has never joined the server");
@@ -262,14 +259,6 @@ const handlers: { [R in Route]: (c: Ctx, body: z.output<(typeof schemas)[R]>) =>
     }
   },
 
-  async lbadmin(c, b) {
-    if (b.action === "list") return { players: await listLeaderboardHidden(c.db) };
-    if (!b.username) throw new AppError("VALIDATION", "Missing player name");
-    const account = await findAccountByUsername(c.db, b.username);
-    if (!account) throw new AppError("NOT_FOUND", "That player has never joined the server");
-    return setLeaderboardHidden(c.db, { mcAccountId: account.id, hidden: b.action === "hide" }, { actorLabel: `in-game:${b.actorName}`.slice(0, 64) });
-  },
-
   async webadmin(c, b) {
     const actor = { actorLabel: `in-game:${b.actorName}`.slice(0, 64) };
     if (b.action === "list") return { admins: await listWebAdmins(c.db) };
@@ -277,6 +266,12 @@ const handlers: { [R in Route]: (c: Ctx, body: z.output<(typeof schemas)[R]>) =>
     const account = await findAccountByUsername(c.db, b.username);
     if (!account) throw new AppError("NOT_FOUND", "That player has never joined the server");
     return setWebAdmin(c.db, { mcAccountId: account.id, admin: b.action === "add" }, actor);
+  },
+
+  async lb(c, b) {
+    const account = await findAccountByUsername(c.db, b.username);
+    if (!account) throw new AppError("NOT_FOUND", "That player has never joined the server");
+    return setLeaderboardFlag(c.db, { mcAccountId: account.id, action: b.action }, { actorLabel: `in-game:${b.actorName}`.slice(0, 64) });
   },
 };
 

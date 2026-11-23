@@ -2,8 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { getPrisma } from "../../lib/db.ts";
 import { csrfToken, currentAuth } from "../../web/session.ts";
 import { getEarningConfig } from "../../services/settings.ts";
-import { listLeaderboardHidden } from "../../services/leaderboard-admin.ts";
-import { adminAdjustAction, adminLeaderboardAction, adminRateAction, adminVoteAction } from "../actions.ts";
+import { adminAdjustAction, adminRateAction, adminVoteAction } from "../actions.ts";
 import { getVoteConfig, listVoteSites } from "../../services/votes.ts";
 import { Notice } from "../Notice.tsx";
 import { AdminNav } from "./AdminNav.tsx";
@@ -15,14 +14,13 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
   const { e, ok } = await searchParams;
   const db = getPrisma();
   const csrf = await csrfToken();
-  const [cfg, purchases, review, servers, voteCfg, voteSites, dq] = await Promise.all([
+  const [cfg, purchases, review, servers, voteCfg, voteSites] = await Promise.all([
     getEarningConfig(db),
     db.purchase.findMany({ orderBy: { createdAt: "desc" }, take: 15, include: { account: { select: { username: true } } } }),
     db.rewardQueue.findMany({ where: { status: { in: ["NEEDS_REVIEW", "FAILED"] } }, orderBy: { updatedAt: "desc" }, take: 20, include: { purchase: { select: { productName: true } }, account: { select: { username: true } } } }),
     db.serverInstance.findMany({ orderBy: { lastSeenAt: "desc" }, take: 5 }),
     getVoteConfig(db),
     listVoteSites(db),
-    listLeaderboardHidden(db),
   ]);
   const hidden = <input type="hidden" name="_csrf" value={csrf} />;
   return (
@@ -52,13 +50,6 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
           <select name="action" className="input max-w-32"><option value="give">give</option><option value="take">take</option><option value="set">set</option></select>
           <input name="amount" type="number" min="0" placeholder="amount" className="input max-w-32" required /><button className="btn">Apply</button></form>
         <p className="mt-2 text-xs text-zinc-500">Every change is written to the audit log.</p></section>
-      <section className="card"><h2 className="mb-2 font-semibold">Leaderboard disqualification</h2>
-        <form action={adminLeaderboardAction} className="flex flex-wrap gap-2">{hidden}
-          <input name="username" placeholder="Minecraft name" className="input max-w-48" required />
-          <select name="action" className="input max-w-48"><option value="hide">disqualify (hide)</option><option value="show">allow back</option></select>
-          <button className="btn">Apply</button></form>
-        <p className="mt-2 text-sm text-zinc-400">Disqualified: {dq.length === 0 ? "nobody" : dq.join(", ")}</p>
-        <p className="mt-1 text-xs text-zinc-500">They disappear from the website and in-game leaderboards but keep earning and spending tokens. Also: /tokens admin disqualify|requalify [player].</p></section>
       <section className="card"><h2 className="mb-2 font-semibold">Rewards needing attention</h2>
         {review.length === 0 ? <p className="text-sm text-zinc-400">None.</p> : review.map((r) => <p key={r.id} className="text-sm"><b>{r.account.username}</b> · {r.purchase.productName} · {r.status} <span className="text-zinc-500">{r.lastError ?? ""}</span></p>)}
         <p className="mt-2 text-xs text-zinc-500">NEEDS_REVIEW means the server may or may not have run the commands. Check in-game before re-giving anything.</p></section>

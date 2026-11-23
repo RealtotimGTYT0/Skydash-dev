@@ -48,7 +48,8 @@ export type MinecraftAccountMinAggregateOutputType = {
   playtimeCarrySeconds: number | null
   firstSeenAt: Date | null
   lastSeenAt: Date | null
-  leaderboardHidden: boolean | null
+  lbHidden: boolean | null
+  lbBanned: boolean | null
 }
 
 export type MinecraftAccountMaxAggregateOutputType = {
@@ -63,7 +64,8 @@ export type MinecraftAccountMaxAggregateOutputType = {
   playtimeCarrySeconds: number | null
   firstSeenAt: Date | null
   lastSeenAt: Date | null
-  leaderboardHidden: boolean | null
+  lbHidden: boolean | null
+  lbBanned: boolean | null
 }
 
 export type MinecraftAccountCountAggregateOutputType = {
@@ -78,7 +80,8 @@ export type MinecraftAccountCountAggregateOutputType = {
   playtimeCarrySeconds: number
   firstSeenAt: number
   lastSeenAt: number
-  leaderboardHidden: number
+  lbHidden: number
+  lbBanned: number
   _all: number
 }
 
@@ -105,7 +108,8 @@ export type MinecraftAccountMinAggregateInputType = {
   playtimeCarrySeconds?: true
   firstSeenAt?: true
   lastSeenAt?: true
-  leaderboardHidden?: true
+  lbHidden?: true
+  lbBanned?: true
 }
 
 export type MinecraftAccountMaxAggregateInputType = {
@@ -120,7 +124,8 @@ export type MinecraftAccountMaxAggregateInputType = {
   playtimeCarrySeconds?: true
   firstSeenAt?: true
   lastSeenAt?: true
-  leaderboardHidden?: true
+  lbHidden?: true
+  lbBanned?: true
 }
 
 export type MinecraftAccountCountAggregateInputType = {
@@ -135,7 +140,8 @@ export type MinecraftAccountCountAggregateInputType = {
   playtimeCarrySeconds?: true
   firstSeenAt?: true
   lastSeenAt?: true
-  leaderboardHidden?: true
+  lbHidden?: true
+  lbBanned?: true
   _all?: true
 }
 
@@ -237,7 +243,8 @@ export type MinecraftAccountGroupByOutputType = {
   playtimeCarrySeconds: number
   firstSeenAt: Date
   lastSeenAt: Date
-  leaderboardHidden: boolean
+  lbHidden: boolean
+  lbBanned: boolean
   _count: MinecraftAccountCountAggregateOutputType | null
   _avg: MinecraftAccountAvgAggregateOutputType | null
   _sum: MinecraftAccountSumAggregateOutputType | null
@@ -275,7 +282,8 @@ export type MinecraftAccountWhereInput = {
   playtimeCarrySeconds?: Prisma.IntFilter<"MinecraftAccount"> | number
   firstSeenAt?: Prisma.DateTimeFilter<"MinecraftAccount"> | Date | string
   lastSeenAt?: Prisma.DateTimeFilter<"MinecraftAccount"> | Date | string
-  leaderboardHidden?: Prisma.BoolFilter<"MinecraftAccount"> | boolean
+  lbHidden?: Prisma.BoolFilter<"MinecraftAccount"> | boolean
+  lbBanned?: Prisma.BoolFilter<"MinecraftAccount"> | boolean
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   balance?: Prisma.XOR<Prisma.TokenBalanceNullableScalarRelationFilter, Prisma.TokenBalanceWhereInput> | null
   transactions?: Prisma.TokenTransactionListRelationFilter
@@ -298,7 +306,8 @@ export type MinecraftAccountOrderByWithRelationInput = {
   playtimeCarrySeconds?: Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
-  leaderboardHidden?: Prisma.SortOrder
+  lbHidden?: Prisma.SortOrder
+  lbBanned?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   balance?: Prisma.TokenBalanceOrderByWithRelationInput
   transactions?: Prisma.TokenTransactionOrderByRelationAggregateInput
@@ -324,7 +333,8 @@ export type MinecraftAccountWhereUniqueInput = Prisma.AtLeast<{
   playtimeCarrySeconds?: Prisma.IntFilter<"MinecraftAccount"> | number
   firstSeenAt?: Prisma.DateTimeFilter<"MinecraftAccount"> | Date | string
   lastSeenAt?: Prisma.DateTimeFilter<"MinecraftAccount"> | Date | string
-  leaderboardHidden?: Prisma.BoolFilter<"MinecraftAccount"> | boolean
+  lbHidden?: Prisma.BoolFilter<"MinecraftAccount"> | boolean
+  lbBanned?: Prisma.BoolFilter<"MinecraftAccount"> | boolean
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   balance?: Prisma.XOR<Prisma.TokenBalanceNullableScalarRelationFilter, Prisma.TokenBalanceWhereInput> | null
   transactions?: Prisma.TokenTransactionListRelationFilter
@@ -347,7 +357,8 @@ export type MinecraftAccountOrderByWithAggregationInput = {
   playtimeCarrySeconds?: Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
-  leaderboardHidden?: Prisma.SortOrder
+  lbHidden?: Prisma.SortOrder
+  lbBanned?: Prisma.SortOrder
   _count?: Prisma.MinecraftAccountCountOrderByAggregateInput
   _avg?: Prisma.MinecraftAccountAvgOrderByAggregateInput
   _max?: Prisma.MinecraftAccountMaxOrderByAggregateInput
@@ -370,7 +381,8 @@ export type MinecraftAccountScalarWhereWithAggregatesInput = {
   playtimeCarrySeconds?: Prisma.IntWithAggregatesFilter<"MinecraftAccount"> | number
   firstSeenAt?: Prisma.DateTimeWithAggregatesFilter<"MinecraftAccount"> | Date | string
   lastSeenAt?: Prisma.DateTimeWithAggregatesFilter<"MinecraftAccount"> | Date | string
-  leaderboardHidden?: Prisma.BoolWithAggregatesFilter<"MinecraftAccount"> | boolean
+  lbHidden?: Prisma.BoolWithAggregatesFilter<"MinecraftAccount"> | boolean
+  lbBanned?: Prisma.BoolWithAggregatesFilter<"MinecraftAccount"> | boolean
 }
 
 export type MinecraftAccountCreateInput = {
@@ -384,7 +396,8 @@ export type MinecraftAccountCreateInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
   balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
@@ -407,7 +420,8 @@ export type MinecraftAccountUncheckedCreateInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
@@ -428,7 +442,8 @@ export type MinecraftAccountUpdateInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
   balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
@@ -451,7 +466,8 @@ export type MinecraftAccountUncheckedUpdateInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
@@ -473,7 +489,8 @@ export type MinecraftAccountCreateManyInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
 }
 
 export type MinecraftAccountUpdateManyMutationInput = {
@@ -487,7 +504,8 @@ export type MinecraftAccountUpdateManyMutationInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type MinecraftAccountUncheckedUpdateManyInput = {
@@ -502,7 +520,8 @@ export type MinecraftAccountUncheckedUpdateManyInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type MinecraftAccountNullableScalarRelationFilter = {
@@ -522,7 +541,8 @@ export type MinecraftAccountCountOrderByAggregateInput = {
   playtimeCarrySeconds?: Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
-  leaderboardHidden?: Prisma.SortOrder
+  lbHidden?: Prisma.SortOrder
+  lbBanned?: Prisma.SortOrder
 }
 
 export type MinecraftAccountAvgOrderByAggregateInput = {
@@ -542,7 +562,8 @@ export type MinecraftAccountMaxOrderByAggregateInput = {
   playtimeCarrySeconds?: Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
-  leaderboardHidden?: Prisma.SortOrder
+  lbHidden?: Prisma.SortOrder
+  lbBanned?: Prisma.SortOrder
 }
 
 export type MinecraftAccountMinOrderByAggregateInput = {
@@ -557,7 +578,8 @@ export type MinecraftAccountMinOrderByAggregateInput = {
   playtimeCarrySeconds?: Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrder
   lastSeenAt?: Prisma.SortOrder
-  leaderboardHidden?: Prisma.SortOrder
+  lbHidden?: Prisma.SortOrder
+  lbBanned?: Prisma.SortOrder
 }
 
 export type MinecraftAccountSumOrderByAggregateInput = {
@@ -723,7 +745,8 @@ export type MinecraftAccountCreateWithoutUserInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseCreateNestedManyWithoutAccountInput
@@ -744,7 +767,8 @@ export type MinecraftAccountUncheckedCreateWithoutUserInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
@@ -781,7 +805,8 @@ export type MinecraftAccountUpdateWithoutUserInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUpdateManyWithoutAccountNestedInput
@@ -802,7 +827,8 @@ export type MinecraftAccountUncheckedUpdateWithoutUserInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
@@ -823,7 +849,8 @@ export type MinecraftAccountCreateWithoutBalanceInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
   transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseCreateNestedManyWithoutAccountInput
@@ -845,7 +872,8 @@ export type MinecraftAccountUncheckedCreateWithoutBalanceInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
@@ -881,7 +909,8 @@ export type MinecraftAccountUpdateWithoutBalanceInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
   transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUpdateManyWithoutAccountNestedInput
@@ -903,7 +932,8 @@ export type MinecraftAccountUncheckedUpdateWithoutBalanceInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
@@ -923,7 +953,8 @@ export type MinecraftAccountCreateWithoutTransactionsInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
   balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
   purchases?: Prisma.PurchaseCreateNestedManyWithoutAccountInput
@@ -945,7 +976,8 @@ export type MinecraftAccountUncheckedCreateWithoutTransactionsInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
@@ -981,7 +1013,8 @@ export type MinecraftAccountUpdateWithoutTransactionsInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
   balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUpdateManyWithoutAccountNestedInput
@@ -1003,7 +1036,8 @@ export type MinecraftAccountUncheckedUpdateWithoutTransactionsInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
@@ -1023,7 +1057,8 @@ export type MinecraftAccountCreateWithoutPlaytimeRecordsInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
   balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
@@ -1045,7 +1080,8 @@ export type MinecraftAccountUncheckedCreateWithoutPlaytimeRecordsInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
@@ -1081,7 +1117,8 @@ export type MinecraftAccountUpdateWithoutPlaytimeRecordsInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
   balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
@@ -1103,7 +1140,8 @@ export type MinecraftAccountUncheckedUpdateWithoutPlaytimeRecordsInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
@@ -1123,7 +1161,8 @@ export type MinecraftAccountCreateWithoutPurchasesInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
   balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
@@ -1145,7 +1184,8 @@ export type MinecraftAccountUncheckedCreateWithoutPurchasesInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
   rewards?: Prisma.RewardQueueUncheckedCreateNestedManyWithoutAccountInput
@@ -1181,7 +1221,8 @@ export type MinecraftAccountUpdateWithoutPurchasesInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
   balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
@@ -1203,7 +1244,8 @@ export type MinecraftAccountUncheckedUpdateWithoutPurchasesInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
   rewards?: Prisma.RewardQueueUncheckedUpdateManyWithoutAccountNestedInput
@@ -1223,7 +1265,8 @@ export type MinecraftAccountCreateWithoutRewardsInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
   balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
@@ -1245,7 +1288,8 @@ export type MinecraftAccountUncheckedCreateWithoutRewardsInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
@@ -1281,7 +1325,8 @@ export type MinecraftAccountUpdateWithoutRewardsInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
   balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
@@ -1303,7 +1348,8 @@ export type MinecraftAccountUncheckedUpdateWithoutRewardsInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
@@ -1323,7 +1369,8 @@ export type MinecraftAccountCreateWithoutVoteRecordsInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
   balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
@@ -1345,7 +1392,8 @@ export type MinecraftAccountUncheckedCreateWithoutVoteRecordsInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
@@ -1381,7 +1429,8 @@ export type MinecraftAccountUpdateWithoutVoteRecordsInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
   balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
@@ -1403,7 +1452,8 @@ export type MinecraftAccountUncheckedUpdateWithoutVoteRecordsInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
@@ -1423,7 +1473,8 @@ export type MinecraftAccountCreateWithoutRanksInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: Prisma.UserCreateNestedOneWithoutMinecraftAccountInput
   balance?: Prisma.TokenBalanceCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionCreateNestedManyWithoutAccountInput
@@ -1445,7 +1496,8 @@ export type MinecraftAccountUncheckedCreateWithoutRanksInput = {
   playtimeCarrySeconds?: number
   firstSeenAt?: Date | string
   lastSeenAt?: Date | string
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   balance?: Prisma.TokenBalanceUncheckedCreateNestedOneWithoutAccountInput
   transactions?: Prisma.TokenTransactionUncheckedCreateNestedManyWithoutAccountInput
   purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutAccountInput
@@ -1481,7 +1533,8 @@ export type MinecraftAccountUpdateWithoutRanksInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneWithoutMinecraftAccountNestedInput
   balance?: Prisma.TokenBalanceUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUpdateManyWithoutAccountNestedInput
@@ -1503,7 +1556,8 @@ export type MinecraftAccountUncheckedUpdateWithoutRanksInput = {
   playtimeCarrySeconds?: Prisma.IntFieldUpdateOperationsInput | number
   firstSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaderboardHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lbBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   balance?: Prisma.TokenBalanceUncheckedUpdateOneWithoutAccountNestedInput
   transactions?: Prisma.TokenTransactionUncheckedUpdateManyWithoutAccountNestedInput
   purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutAccountNestedInput
@@ -1600,7 +1654,8 @@ export type MinecraftAccountSelect<ExtArgs extends runtime.Types.Extensions.Inte
   playtimeCarrySeconds?: boolean
   firstSeenAt?: boolean
   lastSeenAt?: boolean
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: boolean | Prisma.MinecraftAccount$userArgs<ExtArgs>
   balance?: boolean | Prisma.MinecraftAccount$balanceArgs<ExtArgs>
   transactions?: boolean | Prisma.MinecraftAccount$transactionsArgs<ExtArgs>
@@ -1624,7 +1679,8 @@ export type MinecraftAccountSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   playtimeCarrySeconds?: boolean
   firstSeenAt?: boolean
   lastSeenAt?: boolean
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: boolean | Prisma.MinecraftAccount$userArgs<ExtArgs>
 }, ExtArgs["result"]["minecraftAccount"]>
 
@@ -1640,7 +1696,8 @@ export type MinecraftAccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   playtimeCarrySeconds?: boolean
   firstSeenAt?: boolean
   lastSeenAt?: boolean
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
   user?: boolean | Prisma.MinecraftAccount$userArgs<ExtArgs>
 }, ExtArgs["result"]["minecraftAccount"]>
 
@@ -1656,10 +1713,11 @@ export type MinecraftAccountSelectScalar = {
   playtimeCarrySeconds?: boolean
   firstSeenAt?: boolean
   lastSeenAt?: boolean
-  leaderboardHidden?: boolean
+  lbHidden?: boolean
+  lbBanned?: boolean
 }
 
-export type MinecraftAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "mcUuid" | "username" | "userId" | "accountType" | "onlineModeVerified" | "linkedAt" | "playtimeTotalSeconds" | "playtimeCarrySeconds" | "firstSeenAt" | "lastSeenAt" | "leaderboardHidden", ExtArgs["result"]["minecraftAccount"]>
+export type MinecraftAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "mcUuid" | "username" | "userId" | "accountType" | "onlineModeVerified" | "linkedAt" | "playtimeTotalSeconds" | "playtimeCarrySeconds" | "firstSeenAt" | "lastSeenAt" | "lbHidden" | "lbBanned", ExtArgs["result"]["minecraftAccount"]>
 export type MinecraftAccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.MinecraftAccount$userArgs<ExtArgs>
   balance?: boolean | Prisma.MinecraftAccount$balanceArgs<ExtArgs>
@@ -1702,7 +1760,8 @@ export type $MinecraftAccountPayload<ExtArgs extends runtime.Types.Extensions.In
     playtimeCarrySeconds: number
     firstSeenAt: Date
     lastSeenAt: Date
-    leaderboardHidden: boolean
+    lbHidden: boolean
+    lbBanned: boolean
   }, ExtArgs["result"]["minecraftAccount"]>
   composites: {}
 }
@@ -2145,7 +2204,8 @@ export interface MinecraftAccountFieldRefs {
   readonly playtimeCarrySeconds: Prisma.FieldRef<"MinecraftAccount", 'Int'>
   readonly firstSeenAt: Prisma.FieldRef<"MinecraftAccount", 'DateTime'>
   readonly lastSeenAt: Prisma.FieldRef<"MinecraftAccount", 'DateTime'>
-  readonly leaderboardHidden: Prisma.FieldRef<"MinecraftAccount", 'Boolean'>
+  readonly lbHidden: Prisma.FieldRef<"MinecraftAccount", 'Boolean'>
+  readonly lbBanned: Prisma.FieldRef<"MinecraftAccount", 'Boolean'>
 }
     
 

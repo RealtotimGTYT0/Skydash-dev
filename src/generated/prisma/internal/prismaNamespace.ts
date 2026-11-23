@@ -2062,7 +2062,8 @@ export const MinecraftAccountScalarFieldEnum = {
   playtimeCarrySeconds: 'playtimeCarrySeconds',
   firstSeenAt: 'firstSeenAt',
   lastSeenAt: 'lastSeenAt',
-  leaderboardHidden: 'leaderboardHidden'
+  lbHidden: 'lbHidden',
+  lbBanned: 'lbBanned'
 } as const
 
 export type MinecraftAccountScalarFieldEnum = (typeof MinecraftAccountScalarFieldEnum)[keyof typeof MinecraftAccountScalarFieldEnum]
@@ -2307,6 +2308,8 @@ export const RankScalarFieldEnum = {
   name: 'name',
   displayName: 'displayName',
   priority: 'priority',
+  animated: 'animated',
+  lpGroup: 'lpGroup',
   grantCommands: 'grantCommands',
   revokeCommands: 'revokeCommands',
   createdAt: 'createdAt'
